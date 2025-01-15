@@ -13,7 +13,7 @@ const Landing = () => {
 
 export default function Page() {
   return (
-    <main>
+    <main className="relative">
       <Landing />
     </main>
   );

@@ -27,24 +27,24 @@ const Header = () => {
       <Navbar
         onMenuOpenChange={setIsMenuOpen}
         shouldHideOnScroll
-        className="bg-transparent w-full"
+        className="absolute top-0 z-50 bg-transparent backdrop-blur-sm w-full"
       >
         <NavbarContent>
           <NavbarMenuToggle
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            className="md:hidden"
+            className="md:hidden text-white"
           />
           <NavbarBrand>
-            <Link href="/" className="font-bold text-inherit">
+            <Link href="/" className="font-bold text-inherit text-white">
               TrekOn
             </Link>
           </NavbarBrand>
         </NavbarContent>
 
-        <NavbarContent className="hidden md:flex gap-4" justify="center">
+        <NavbarContent className="hidden md:flex gap-8" justify="center">
           {menuItems.map((item, index) => (
             <NavbarItem key={index}>
-              <Link color="foreground" href="#" size="md">
+              <Link href="#" className="text-white text-sm md:text-md">
                 {item}
               </Link>
             </NavbarItem>
@@ -52,7 +52,7 @@ const Header = () => {
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>
-            <Button as={Link} color="primary" href="#" variant="flat">
+            <Button as={Link} href="#" className="text-black bg-white">
               Login
             </Button>
           </NavbarItem>
