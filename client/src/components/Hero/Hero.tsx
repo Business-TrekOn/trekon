@@ -44,8 +44,8 @@ const Hero = () => {
           Find Your Trek
         </h1>
         <p className="text-sm md:text-md lg:text-lg text-neutral-300 max-w-md mx-auto">
-          Text is the exact, original words written by an author. Text is also a
-          specific work as written by the original author.
+          The journey of a thousand miles begins with a single
+          step into the wild.
         </p>
         <div className="flex gap-5 flex-col md:flex-row">
           {/* Location component */}
