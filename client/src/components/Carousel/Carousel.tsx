@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import TrekCard from "../Card/TrekCard";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Carousel = () => {
   const treks = [
