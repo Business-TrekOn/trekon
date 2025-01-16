@@ -21,7 +21,7 @@ export default function MyAccordion({
         title={title}
         className="font-semibold"
       >
-        <p className="font-normal">{content}</p>
+        <p className="font-normal text-sm tracking-wide">{content}</p>
       </AccordionItem>
     </Accordion>
   );

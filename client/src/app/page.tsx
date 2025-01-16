@@ -1,4 +1,5 @@
 // app/page.tsx
+import BigCta from "@/components/BigCta/BigCta";
 import Faq from "@/components/FAQ/Faq";
 import Featured from "@/components/Featured/Featured";
 import Guidelines from "@/components/Guidelines/Guidelines";
@@ -17,6 +18,7 @@ const Landing = () => {
       <Guidelines />
       <SafetyAndTrust />
       <Faq />
+      <BigCta />
     </>
   );
 };
