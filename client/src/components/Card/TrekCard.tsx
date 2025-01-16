@@ -18,6 +18,7 @@ type TrekData = {
   nextAvailable: string;
   price: number;
   image: string;
+  isSponsored: boolean;
 };
 
 const TrekCard = ({ trek }: { trek: TrekData }) => {
@@ -33,18 +34,20 @@ const TrekCard = ({ trek }: { trek: TrekData }) => {
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             loading="lazy"
           />
-          <Chip
-            radius="md"
-            size="sm"
-            className="absolute top-2 right-2"
-            classNames={{
-              base: "bg-gradient-to-br from-yellow-300 to-yellow-400 border-small border-yellow-200/50 shadow-yellow-500/30",
-              content: "drop-shadow shadow-black text-black",
-            }}
-            variant="flat"
-          >
-            Sponsored
-          </Chip>
+          {trek.isSponsored && (
+            <Chip
+              radius="md"
+              size="sm"
+              className="absolute top-2 right-2"
+              classNames={{
+                base: "bg-gradient-to-br from-yellow-300 to-yellow-400 border-small border-yellow-200/50 shadow-yellow-500/30",
+                content: "drop-shadow shadow-black text-black",
+              }}
+              variant="flat"
+            >
+              Sponsored
+            </Chip>
+          )}
         </div>
 
         <div className="flex items-center gap-2 px-4 sm:px-6 pt-4 sm:pt-6">

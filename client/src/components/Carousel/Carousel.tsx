@@ -2,107 +2,9 @@
 import React, { useEffect, useState } from "react";
 import TrekCard from "../Card/TrekCard";
 import { motion, useAnimation } from "framer-motion";
+import { treks } from "@/utils/treks";
 
 const Carousel = () => {
-  const treks = [
-    {
-      id: 1,
-      title: "Everest Base Camp Trek",
-      guide: {
-        name: "Pemba Sherpa",
-        experience: "15",
-        avatar: "/avatar-placeholder.png",
-      },
-      difficulty: "Advanced",
-      duration: "12 days",
-      groupSizeMin: "4",
-      groupSizeMax: "8",
-      nextAvailable: "June 8, 2024",
-      price: 1400,
-      image: "/card-image-placeholder.png",
-    },
-    {
-      id: 2,
-      title: "Everest Base Camp Trek",
-      guide: {
-        name: "Pemba Sherpa",
-        experience: "15",
-        avatar: "/avatar-placeholder.png",
-      },
-      difficulty: "Advanced",
-      duration: "12 days",
-      groupSizeMin: "4",
-      groupSizeMax: "8",
-      nextAvailable: "June 8, 2024",
-      price: 1400,
-      image: "/card-image-placeholder.png",
-    },
-    {
-      id: 3,
-      title: "Everest Base Camp Trek",
-      guide: {
-        name: "Pemba Sherpa",
-        experience: "15",
-        avatar: "/avatar-placeholder.png",
-      },
-      difficulty: "Advanced",
-      duration: "12 days",
-      groupSizeMin: "4",
-      groupSizeMax: "8",
-      nextAvailable: "June 8, 2024",
-      price: 1400,
-      image: "/card-image-placeholder.png",
-    },
-    {
-      id: 4,
-      title: "Everest Base Camp Trek",
-      guide: {
-        name: "Pemba Sherpa",
-        experience: "15",
-        avatar: "/avatar-placeholder.png",
-      },
-      difficulty: "Advanced",
-      duration: "12 days",
-      groupSizeMin: "4",
-      groupSizeMax: "8",
-      nextAvailable: "June 8, 2024",
-      price: 1400,
-      image: "/card-image-placeholder.png",
-    },
-    {
-      id: 5,
-      title: "Everest Base Camp Trek",
-      guide: {
-        name: "Pemba Sherpa",
-        experience: "15",
-        avatar: "/avatar-placeholder.png",
-      },
-      difficulty: "Advanced",
-      duration: "12 days",
-      groupSizeMin: "4",
-      groupSizeMax: "8",
-      nextAvailable: "June 8, 2024",
-      price: 1400,
-      image: "/card-image-placeholder.png",
-    },
-    {
-      id: 6,
-      title: "Everest Base Camp Trek",
-      guide: {
-        name: "Pemba Sherpa",
-        experience: "15",
-        avatar: "/avatar-placeholder.png",
-      },
-      difficulty: "Advanced",
-      duration: "12 days",
-      groupSizeMin: "4",
-      groupSizeMax: "8",
-      nextAvailable: "June 8, 2024",
-      price: 1400,
-      image: "/card-image-placeholder.png",
-    },
-  ];
-
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(3);
   const controls = useAnimation();
@@ -127,7 +29,8 @@ const Carousel = () => {
     setCurrentPage(0);
   }, [itemsPerView]);
 
-  const totalPages = Math.ceil(treks.length / itemsPerView);
+  const sponsoredTreks = treks.filter((trek) => trek.isSponsored);
+  const totalPages = Math.ceil(sponsoredTreks.length / itemsPerView);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDragEnd = (_event: PointerEvent, info: any) => {
@@ -170,7 +73,7 @@ const Carousel = () => {
             }}
           >
             {/* Individual slides */}
-            {treks.map((trek) => (
+            {sponsoredTreks.map((trek) => (
               <motion.div
                 key={trek.id}
                 className="w-full flex-none md:w-1/2 lg:w-1/3 px-4"

@@ -11,60 +11,105 @@ import {
   Link,
   Button,
 } from "@nextui-org/react";
+import clsx from "clsx";
 
-const Header = () => {
+interface HeaderProps {
+  isDark: boolean;
+  className?: string;
+}
+
+interface MenuItem {
+  name: string;
+  link: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ isDark, className = "" }) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const menuItems = [
-    "FEATURED TREK",
-    "HOW IT WORKS",
-    "TREKKING GUIDE",
-    "SAFETY & TRUST",
+  const menuItems: MenuItem[] = [
+    { name: "HOME", link: "/" },
+    { name: "ABOUT US", link: "/about" },
+    { name: "TREKKING GUIDE", link: "/trek-guide" },
   ];
 
   return (
-    <nav className="absolute top-0 z-50 mx-auto w-full h-fit">
+    <nav
+      className={clsx("absolute top-0 z-50 mx-auto w-full h-fit", className)}
+    >
       <Navbar
         onMenuOpenChange={setIsMenuOpen}
         maxWidth="full"
-        height={"5rem"}
+        height="5rem"
         shouldHideOnScroll
         isBlurred={false}
-        className="mx-auto bg-transparent"
+        className={clsx(
+          "mx-auto transition-all duration-300",
+          isMenuOpen ? "bg-white" : "bg-transparent"
+        )}
       >
         <NavbarContent>
           <NavbarMenuToggle
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            className="md:hidden text-white"
+            className={clsx(
+              "md:hidden",
+              isDark && !isMenuOpen ? "text-white" : "text-black"
+            )}
           />
           <NavbarBrand>
-            <Link href="/" className="font-bold text-inherit text-white">
+            <Link
+              href="/"
+              className={clsx(
+                "font-bold text-inherit transition-colors",
+                isDark && !isMenuOpen ? "text-white" : "text-black"
+              )}
+            >
               TrekOn
             </Link>
           </NavbarBrand>
         </NavbarContent>
 
         <NavbarContent className="hidden md:flex gap-8" justify="center">
-          {menuItems.map((item, index) => (
-            <NavbarItem key={index}>
-              <Link href="#" className="text-white text-sm md:text-md">
-                {item}
+          {menuItems.map((item) => (
+            <NavbarItem key={item.name}>
+              <Link
+                href={item.link}
+                className={clsx(
+                  "text-sm md:text-md transition-colors hover:opacity-80",
+                  isDark && !isMenuOpen ? "text-white" : "text-black"
+                )}
+              >
+                {item.name}
               </Link>
             </NavbarItem>
           ))}
         </NavbarContent>
+
         <NavbarContent justify="end">
           <NavbarItem>
-            <Button as={Link} href="#" className="text-black bg-white">
+            <Button
+              as={Link}
+              href="/login"
+              className={clsx(
+                "transition-transform hover:scale-105",
+                isDark && !isMenuOpen
+                  ? "text-black bg-white hover:bg-gray-100"
+                  : "bg-black text-white hover:bg-gray-900"
+              )}
+            >
               Login
             </Button>
           </NavbarItem>
         </NavbarContent>
-        <NavbarMenu>
-          {menuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
-              <Link className="w-full text-black" href="#" size="md">
-                {item}
+
+        <NavbarMenu className="bg-white/95 backdrop-blur-md">
+          {menuItems.map((item) => (
+            <NavbarMenuItem key={item.name}>
+              <Link
+                className="w-full text-black hover:text-gray-700 transition-colors"
+                href={item.link}
+                size="lg"
+              >
+                {item.name}
               </Link>
             </NavbarMenuItem>
           ))}

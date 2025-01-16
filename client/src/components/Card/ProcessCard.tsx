@@ -23,8 +23,8 @@ const ProcessCard = ({
         <Image
           src={icon}
           alt=""
-          width={42}
-          height={42}
+          width={50}
+          height={50}
           loading="lazy"
           className="w-auto h-auto"
           aria-hidden="true"

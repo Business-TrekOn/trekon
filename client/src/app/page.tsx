@@ -12,7 +12,7 @@ import SafetyAndTrust from "@/components/SafetyAndTrust/SafetyAndTrust";
 const Landing = () => {
   return (
     <>
-      <Header />
+      <Header isDark={true} />
       <Hero />
       <Featured />
       <HowItWorks />
