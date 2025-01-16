@@ -2,6 +2,7 @@
 import BigCta from "@/components/BigCta/BigCta";
 import Faq from "@/components/FAQ/Faq";
 import Featured from "@/components/Featured/Featured";
+import Footer from "@/components/Footer/Footer";
 import Guidelines from "@/components/Guidelines/Guidelines";
 import Header from "@/components/Header/Header";
 import Hero from "@/components/Hero/Hero";
@@ -19,6 +20,7 @@ const Landing = () => {
       <SafetyAndTrust />
       <Faq />
       <BigCta />
+      <Footer />
     </>
   );
 };
