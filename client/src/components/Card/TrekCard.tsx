@@ -1,4 +1,4 @@
-import { Avatar, Button } from "@nextui-org/react";
+import { Avatar, Button, Chip } from "@nextui-org/react";
 import { CalendarDays, UsersRound } from "lucide-react";
 import Image from "next/image";
 import React from "react";
@@ -31,11 +31,23 @@ const TrekCard = ({ trek }: { trek: TrekData }) => {
             alt={trek.title}
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            priority
+            loading="lazy"
           />
+          <Chip
+            radius="md"
+            size="sm"
+            className="absolute top-2 right-2"
+            classNames={{
+              base: "bg-gradient-to-br from-yellow-300 to-yellow-400 border-small border-yellow-200/50 shadow-yellow-500/30",
+              content: "drop-shadow shadow-black text-black",
+            }}
+            variant="flat"
+          >
+            Sponsored
+          </Chip>
         </div>
 
-        <div className="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 pt-4 sm:pt-6">
+        <div className="flex items-center gap-2 px-4 sm:px-6 pt-4 sm:pt-6">
           <Avatar
             src={trek.guide.avatar}
             alt={trek.guide.name}
@@ -74,7 +86,7 @@ const TrekCard = ({ trek }: { trek: TrekData }) => {
             <div className="flex items-center gap-2">
               <CalendarDays className="text-gray-500 w-3.5 sm:w-4" />
               <span className="text-xs sm:text-sm text-gray-500">
-                Next available : {trek.nextAvailable}
+                Starting from : {trek.nextAvailable}
               </span>
             </div>
           </div>
@@ -93,4 +105,4 @@ const TrekCard = ({ trek }: { trek: TrekData }) => {
   );
 };
 
-export default TrekCard;
+export default React.memo(TrekCard);
