@@ -138,7 +138,7 @@ const LoginUser = () => {
             alt="Decorative floral still life painting"
             className="object-cover"
             fill
-            priority
+            loading="lazy"
           />
         </div>
       </section>

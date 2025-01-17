@@ -21,7 +21,7 @@ const FooterLinkSection: React.FC<FooterLinkSectionProps> = ({
   items,
   isIconLinks = false,
 }) => (
-  <div className="w-full sm:w-auto">
+  <div className="w-full sm:w-auto p-5">
     <h2 className="font-semibold mb-4 text-lg">{title}</h2>
     <ul className={`flex ${isIconLinks ? "flex-row gap-6" : "flex-col gap-3"}`}>
       {items.map((item, index) => (
@@ -90,8 +90,8 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-black text-white" aria-label="Site footer">
       <div className="container mx-auto max-w-7xl px-4 py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-16">
-          <div className="flex flex-col gap-2">
+        <div className="flex flex-wrap justify-between gap-10 lg:gap-16">
+          <div className="flex flex-col gap-2 p-5">
             <Link
               href="/"
               className="text-xl font-bold tracking-wide hover:opacity-90 transition-opacity"

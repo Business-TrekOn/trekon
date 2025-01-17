@@ -12,7 +12,7 @@ const ProcessCard = ({
   icon,
   title,
   description,
-  ariaLabel,
+  ariaLabel = "",
 }: ProcessCardType) => {
   return (
     <div

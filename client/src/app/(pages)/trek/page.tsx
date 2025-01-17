@@ -16,7 +16,7 @@ import Link from "next/link";
 
 const Trek = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <section className="min-h-screen flex flex-col">
       <Header isDark={false} />
 
       <main className="flex-grow">
@@ -91,7 +91,7 @@ const Trek = () => {
       </main>
 
       <Footer />
-    </div>
+    </section>
   );
 };
 
