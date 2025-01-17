@@ -22,7 +22,7 @@ export const teamMembers: TeamMember[] = [
   },
   {
     name: "Srijan Kumar Pramanick",
-    role: "Digital Marketr",
+    role: "Digital Marketer",
     image: "/srijan.jpg",
   },
   {
