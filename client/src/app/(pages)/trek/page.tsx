@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import TrekCard from "@/components/Card/TrekCard";
 import Footer from "@/components/Shared/Footer/Footer";
 import Header from "@/components/Shared/Header/Header";
@@ -14,32 +14,10 @@ import {
 import { MapPin } from "lucide-react";
 import Link from "next/link";
 
-const Treks = () => {
-  const [headerStyle, setHeaderStyle] = useState(false);
-
-  // Handle header transparency based on scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 160) {
-        // 10rem = 160px
-        setHeaderStyle(true);
-      } else {
-        setHeaderStyle(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
+const Trek = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <Header
-        isDark={false}
-        className={`fixed w-full z-50 transition-all duration-300 ${
-          headerStyle ? "bg-white" : "bg-transparent"
-        }`}
-      />
+      <Header isDark={false} />
 
       <main className="flex-grow">
         {/* Hero Section with Search */}
@@ -74,6 +52,8 @@ const Treks = () => {
 
                 <Link href="/search" className="md:w-auto w-full">
                   <Button
+                    as={Link}
+                    href={`/trek/location`}
                     className="bg-black text-white w-full h-full min-h-[40px]"
                     size="lg"
                   >
@@ -90,7 +70,7 @@ const Treks = () => {
           <div className="container mx-auto max-w-7xl">
             <h2
               id="available-packages"
-              className="text-2xl md:text-3xl font-semibold text-center mb-10"
+              className="text-2xl md:text-3xl font-semibold mb-10 text-center"
             >
               Available Packages
             </h2>
@@ -115,4 +95,4 @@ const Treks = () => {
   );
 };
 
-export default React.memo(Treks);
+export default React.memo(Trek);

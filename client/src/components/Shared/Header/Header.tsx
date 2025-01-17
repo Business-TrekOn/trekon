@@ -29,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({ isDark, className = "" }) => {
   const menuItems: MenuItem[] = [
     { name: "HOME", link: "/" },
     { name: "ABOUT US", link: "/about" },
-    { name: "TREKKING GUIDE", link: "/trekking-guidelines" },
+    { name: "CONTACT US", link: "/contact" },
   ];
 
   return (
@@ -87,7 +87,7 @@ const Header: React.FC<HeaderProps> = ({ isDark, className = "" }) => {
           <NavbarItem>
             <Button
               as={Link}
-              href="/login"
+              href="/auth/user/login"
               className={clsx(
                 "transition-transform hover:scale-105",
                 isDark && !isMenuOpen
