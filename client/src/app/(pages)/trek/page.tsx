@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import TrekCard from "@/components/Card/TrekCard";
-import Footer from "@/components/Footer/Footer";
-import Header from "@/components/Header/Header";
-import { locations } from "@/utils/locations";
-import { treks } from "@/utils/treks";
+import Footer from "@/components/Shared/Footer/Footer";
+import Header from "@/components/Shared/Header/Header";
+import { locations } from "@/utils/data/locations";
+import { treks } from "@/utils/data/treks";
 import {
   Autocomplete,
   AutocompleteItem,

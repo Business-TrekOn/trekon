@@ -1,5 +1,5 @@
 import React from "react";
-import ProcessCard from "../Card/ProcessCard";
+import ProcessCard from "../../Card/ProcessCard";
 
 const SafetyAndTrust = () => {
   const processes = [

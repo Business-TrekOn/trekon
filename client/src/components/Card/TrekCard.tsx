@@ -1,6 +1,7 @@
 import { Avatar, Button, Chip } from "@nextui-org/react";
 import { CalendarDays, UsersRound } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 type TrekData = {
@@ -98,7 +99,11 @@ const TrekCard = ({ trek }: { trek: TrekData }) => {
             <span className="font-bold text-lg sm:text-xl text-white">
               ${trek.price.toLocaleString()}
             </span>
-            <Button className="text-black bg-white text-sm">
+            <Button
+              as={Link}
+              href={`/trek/${trek.id}`}
+              className="text-black bg-white text-sm"
+            >
               View Details
             </Button>
           </div>

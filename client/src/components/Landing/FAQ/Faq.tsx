@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import MyAccordion from "../MyAccordion/MyAccordion";
+import MyAccordion from "../../MyAccordion/MyAccordion";
 
 const Faq = () => {
   const data = [

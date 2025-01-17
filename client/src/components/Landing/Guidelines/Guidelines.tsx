@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Guidelines = () => {
   return (
@@ -32,6 +33,8 @@ const Guidelines = () => {
           </p>
           <Button
             size="lg"
+            as={Link}
+            href="/trekking-guidelines"
             className="bg-black text-white hover:opacity-90 transition-opacity"
             aria-label="Learn more about trekking guidelines"
           >
@@ -44,7 +47,7 @@ const Guidelines = () => {
               src="/Guidelines.jpg"
               alt="Trekking guidelines illustration"
               fill
-              className="object-cover rounded-lg shadow-lg"
+              className="object-cover rounded-lg"
               sizes="(max-width: 768px) 100vw, 500px"
               loading="lazy"
             />

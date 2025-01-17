@@ -7,9 +7,10 @@ import {
 } from "@nextui-org/react";
 import Image from "next/image";
 import React from "react";
-import CoverImage from "../../../public/hero-cover.png";
+import CoverImage from "../../../../public/hero-cover.png";
 import { MapPin } from "lucide-react";
-import { locations } from "@/utils/locations";
+import { locations } from "@/utils/data/locations";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -61,7 +62,9 @@ const Hero = () => {
             variant="flat"
           />
         </div>
-        <Button className="text-black bg-white">Search for Trek</Button>
+        <Button as={Link} href="/trek" className="text-black bg-white">
+          Search for Trek
+        </Button>
       </div>
     </section>
   );

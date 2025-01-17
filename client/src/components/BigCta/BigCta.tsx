@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { Button } from "@nextui-org/react";
+import Link from "next/link";
 
 const BigCta = () => {
   return (
@@ -18,12 +19,19 @@ const BigCta = () => {
           </p>
         </div>
         <div className="flex flex-col md:flex-row gap-4">
-          <Button size="lg" className="text-black bg-white">
+          <Button
+            as={Link}
+            href="/auth/user/register"
+            size="lg"
+            className="text-black bg-white"
+          >
             Start Your Adventure
           </Button>
           <Button
             size="lg"
             variant="bordered"
+            as={Link}
+            href="/auth/sherpa/register"
             className="bg-transparent text-white"
           >
             Become a Sherpa Partner

@@ -8,9 +8,9 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
-  Link,
   Button,
 } from "@nextui-org/react";
+import Link from "next/link";
 import clsx from "clsx";
 
 interface HeaderProps {
@@ -29,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({ isDark, className = "" }) => {
   const menuItems: MenuItem[] = [
     { name: "HOME", link: "/" },
     { name: "ABOUT US", link: "/about" },
-    { name: "TREKKING GUIDE", link: "/trek-guide" },
+    { name: "TREKKING GUIDE", link: "/trekking-guidelines" },
   ];
 
   return (
@@ -40,7 +40,6 @@ const Header: React.FC<HeaderProps> = ({ isDark, className = "" }) => {
         onMenuOpenChange={setIsMenuOpen}
         maxWidth="full"
         height="5rem"
-        shouldHideOnScroll
         isBlurred={false}
         className={clsx(
           "mx-auto transition-all duration-300",
@@ -105,9 +104,8 @@ const Header: React.FC<HeaderProps> = ({ isDark, className = "" }) => {
           {menuItems.map((item) => (
             <NavbarMenuItem key={item.name}>
               <Link
-                className="w-full text-black hover:text-gray-700 transition-colors"
+                className="w-full text-black hover:text-gray-700 transition-colors text-lg"
                 href={item.link}
-                size="lg"
               >
                 {item.name}
               </Link>

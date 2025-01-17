@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import TrekCard from "../Card/TrekCard";
 import { motion, useAnimation } from "framer-motion";
-import { treks } from "@/utils/treks";
+import { treks } from "@/utils/data/treks";
 
 const Carousel = () => {
   const [currentPage, setCurrentPage] = useState(0);
