@@ -2,31 +2,15 @@
 import Footer from "@/components/Shared/Footer/Footer";
 import Header from "@/components/Shared/Header/Header";
 import Image from "next/image";
-import React, { useState } from "react";
 import { Calendar, Users, Mountain, MapPin } from "lucide-react";
-import { Avatar, Button, Chip, Progress } from "@nextui-org/react";
+import { Avatar, Chip } from "@nextui-org/react";
 import { trekDays } from "@/utils/data/trekDays";
-import Link from "next/link";
-import { PanInfo, motion } from "framer-motion";
+import { motion } from "framer-motion";
+import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
+import PhotoGallery from "@/components/ui/PhotoGallery/PhotoGallery";
+import ProgressBarClient from "@/components/ui/ProgressBarClient/ProgressBarClient";
 
 const TrekDetails = () => {
-  const [currentImage, setCurrentImage] = useState(0);
-
-  const images = [
-    "/card-image-placeholder.png",
-    "/photo-carousel-placeholder.jpeg",
-    "/card-image-placeholder.png",
-    "/photo-carousel-placeholder.jpeg",
-  ];
-
-  const handleDragEnd = (_: unknown, info: PanInfo) => {
-    if (info.offset.x < -100) {
-      setCurrentImage((prev) => (prev + 1) % images.length);
-    } else if (info.offset.x > 100) {
-      setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
-    }
-  };
-
   return (
     <section className="min-h-screen flex flex-col">
       <Header isDark={false} />
@@ -41,7 +25,7 @@ const TrekDetails = () => {
           <Image
             src="/card-image-placeholder.png"
             alt="Everest Base Camp"
-            className="object-cover"
+            className="object-cover brightness-50"
             fill
             loading="lazy"
           />
@@ -114,37 +98,7 @@ const TrekDetails = () => {
                 </div>
 
                 {/* Photo Gallery */}
-                <div className="mt-12">
-                  <h2 className="text-2xl font-bold mb-6">Photo Gallery</h2>
-                  <motion.div
-                    className="relative h-[400px] rounded-lg overflow-hidden"
-                    drag="x"
-                    dragConstraints={{ left: 0, right: 0 }}
-                    onDragEnd={handleDragEnd}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Image
-                      src={images[currentImage]}
-                      alt={`Trek image ${currentImage + 1}`}
-                      fill
-                      loading="lazy"
-                      className="object-cover"
-                    />
-                    <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-                      {images.map((_, index) => (
-                        <button
-                          key={index}
-                          className={`w-2 h-2 rounded-full ${
-                            currentImage === index ? "bg-white" : "bg-white/50"
-                          }`}
-                          onClick={() => setCurrentImage(index)}
-                        />
-                      ))}
-                    </div>
-                  </motion.div>
-                </div>
+                <PhotoGallery />
               </div>
 
               {/* Right Column - Booking Info */}
@@ -157,14 +111,7 @@ const TrekDetails = () => {
 
                   <div className="mb-6">
                     <p className="font-semibold mb-2">Available Slots</p>
-                    <Progress
-                      aria-label="Loading..."
-                      className="w-full"
-                      classNames={{
-                        indicator: "bg-black",
-                      }}
-                      value={75}
-                    />
+                    <ProgressBarClient value={75} />
                     <div className="flex justify-between mt-2">
                       <span className="text-sm text-gray-600">8/12</span>
                       <span className="text-sm text-gray-600">
@@ -173,14 +120,13 @@ const TrekDetails = () => {
                     </div>
                   </div>
 
-                  <Button
+                  <ButtonClient
                     size="lg"
-                    as={Link}
                     href="/book-now"
                     className="w-full bg-black text-white py-3 hover:bg-gray-800 hover:scale-105 transition-all mb-6"
                   >
                     Book Now
-                  </Button>
+                  </ButtonClient>
 
                   <div className="border-t pt-6">
                     <h3 className="font-bold mb-4">Your Guide</h3>
@@ -204,14 +150,13 @@ const TrekDetails = () => {
                         </div>
                       </div>
                     </div>
-                    <Button
+                    <ButtonClient
                       size="lg"
-                      as={Link}
                       href="/profile/sherpa/1"
                       className="w-full mt-4 bg-transparent border border-black text-black hover:bg-gray-50 hover:scale-105 transition-all"
                     >
                       View Profile
-                    </Button>
+                    </ButtonClient>
                   </div>
                 </div>
               </div>
@@ -224,4 +169,4 @@ const TrekDetails = () => {
   );
 };
 
-export default React.memo(TrekDetails);
+export default TrekDetails;

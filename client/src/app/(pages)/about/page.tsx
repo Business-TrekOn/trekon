@@ -1,4 +1,3 @@
-"use client";
 import Footer from "@/components/Shared/Footer/Footer";
 import Header from "@/components/Shared/Header/Header";
 import Image from "next/image";
@@ -6,9 +5,8 @@ import CoverImage from "../../../../public/about-us.png";
 import React from "react";
 import { teamMembers } from "@/utils/data/teamMembers";
 import { values } from "@/utils/data/values";
-import ProcessCard from "@/components/Card/ProcessCard";
-import { Button } from "@nextui-org/react";
-import Link from "next/link";
+import ProcessCard from "@/components/ui/Card/ProcessCard";
+import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
 
 const About = () => {
   return (
@@ -16,15 +14,18 @@ const About = () => {
       <Header isDark={false} />
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="w-full h-[400px] relative mt-20">
+        <div className="mt-20 relative h-[400px] flex items-center justify-center">
           <Image
             src={CoverImage}
-            alt="Modern office space with people working"
-            className="w-full h-full object-cover"
+            alt="Contact Hero Background"
             fill
-            loading="lazy"
+            priority
+            className="object-cover brightness-50"
           />
-        </section>
+          <h1 className="relative text-4xl md:text-5xl font-bold text-white z-10">
+            About Us
+          </h1>
+        </div>
 
         {/* Mission Section */}
         <section className="py-20 px-4">
@@ -47,7 +48,6 @@ const About = () => {
                     icon={item.icon}
                     title={item.title}
                     description={item.description}
-                    ariaLabel={item.ariaLabel}
                   />
                 </div>
               ))}
@@ -87,14 +87,13 @@ const About = () => {
               We would love to hear from you and explore how we can work
               together
             </p>
-            <Button
-              as={Link}
+            <ButtonClient
               href="/contact"
               size="lg"
-              className="bg-black text-white  hover:bg-gray-800 hover:scale-105 transition-all"
+              className="bg-black text-white  hover:bg-gray-800"
             >
               Contact Us
-            </Button>
+            </ButtonClient>
           </div>
         </section>
       </main>
@@ -103,4 +102,4 @@ const About = () => {
   );
 };
 
-export default React.memo(About);
+export default About;

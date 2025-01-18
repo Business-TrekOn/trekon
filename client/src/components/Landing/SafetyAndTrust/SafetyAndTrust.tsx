@@ -1,36 +1,9 @@
-import React from "react";
-import ProcessCard from "../../Card/ProcessCard";
+import ProcessCard from "../../ui/Card/ProcessCard";
+import { safety } from "@/utils/data/safety";
 
 const SafetyAndTrust = () => {
-  const processes = [
-    {
-      icon: "/verified.png",
-      title: "Verified Sherpas",
-      description:
-        "All our Sherpas undergo thorough background checks and certification verification.",
-      ariaLabel: "Verified Sherpas",
-    },
-    {
-      icon: "/safety.png",
-      title: "Safety Floremirst",
-      description:
-        "Comprehensive safety protocols and emergency response plans for every trek",
-      ariaLabel: "Safety Floremirst",
-    },
-    {
-      icon: "/insurance.png",
-      title: "Insurance Coverage",
-      description:
-        "All treks include comprehensive travel and medical insurance coverage",
-      ariaLabel: "Insurance Coverage",
-    },
-  ];
-
   return (
-    <section
-      className="py-16 px-4 bg-white"
-      aria-labelledby="how-it-works-title"
-    >
+    <section className="py-16 px-4 bg-white">
       <div className="container mx-auto max-w-7xl flex flex-col gap-10">
         <h2
           id="how-it-works-title"
@@ -42,7 +15,7 @@ const SafetyAndTrust = () => {
           className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 justify-items-center"
           role="list"
         >
-          {processes.map((process, index) => (
+          {safety.map((process, index) => (
             <div
               key={process.title}
               className="w-full"
@@ -54,7 +27,6 @@ const SafetyAndTrust = () => {
                 icon={process.icon}
                 title={process.title}
                 description={process.description}
-                ariaLabel={process.ariaLabel}
               />
             </div>
           ))}
@@ -65,4 +37,4 @@ const SafetyAndTrust = () => {
 };
 
 // Memoize the component to prevent unnecessary re-renders
-export default React.memo(SafetyAndTrust);
+export default SafetyAndTrust;

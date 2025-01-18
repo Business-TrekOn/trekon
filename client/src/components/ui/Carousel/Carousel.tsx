@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import TrekCard from "../Card/TrekCard";
 import { motion, useAnimation } from "framer-motion";
 import { treks } from "@/utils/data/treks";
@@ -110,4 +110,4 @@ const Carousel = () => {
   );
 };
 
-export default React.memo(Carousel);
+export default Carousel;

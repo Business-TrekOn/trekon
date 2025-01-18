@@ -1,6 +1,5 @@
 "use client";
-import React from "react";
-import TrekCard from "@/components/Card/TrekCard";
+import TrekCard from "@/components/ui/Card/TrekCard";
 import Footer from "@/components/Shared/Footer/Footer";
 import Header from "@/components/Shared/Header/Header";
 import { locations } from "@/utils/data/locations";
@@ -8,11 +7,11 @@ import { treks } from "@/utils/data/treks";
 import {
   Autocomplete,
   AutocompleteItem,
-  Button,
   DateRangePicker,
 } from "@nextui-org/react";
 import { MapPin } from "lucide-react";
 import Link from "next/link";
+import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
 
 const Trek = () => {
   return (
@@ -51,14 +50,13 @@ const Trek = () => {
                 />
 
                 <Link href="/search" className="md:w-auto w-full">
-                  <Button
-                    as={Link}
-                    href={`/trek/location`}
+                  <ButtonClient
+                    href={`/trek`}
                     className="bg-black text-white w-full h-full min-h-[40px]"
                     size="lg"
                   >
                     Search
-                  </Button>
+                  </ButtonClient>
                 </Link>
               </div>
             </div>
@@ -95,4 +93,4 @@ const Trek = () => {
   );
 };
 
-export default React.memo(Trek);
+export default Trek;

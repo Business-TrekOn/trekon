@@ -1,6 +1,4 @@
-"use client";
-import React, { memo } from "react";
-import { Divider } from "@nextui-org/react";
+import { footerLinks } from "@/utils/data/footerLinks";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -59,34 +57,6 @@ const FooterLinkSection: React.FC<FooterLinkSectionProps> = ({
 );
 
 const Footer: React.FC = () => {
-  const footerLinks = {
-    quick_links: [
-      { name: "About Us", link: "/about" },
-      { name: "Explore Treks", link: "/treks" },
-      { name: "Terms & Conditions", link: "/terms" },
-      { name: "Join as Sherpa", link: "/profile/sherpa" },
-    ],
-    support: [
-      { name: "Safety", link: "/safety" },
-      { name: "Insurance", link: "/insurance" },
-      { name: "Contact Us", link: "/contact" },
-    ],
-    follow_us: [
-      {
-        logo: "/instagram.png",
-        link: "https://www.instagram.com/business_trekon?utm_source=qr&igsh=MTIxcDJ3Y3ZvZHRmZA==",
-      },
-      {
-        logo: "/twitter.png",
-        link: "https://x.com/business_trekon",
-      },
-      {
-        logo: "/youtube.png",
-        link: "https://m.youtube.com/channel/UCYLm6x-gmnDfIJZ2LhTujKg",
-      },
-    ],
-  };
-
   return (
     <footer className="bg-black text-white" aria-label="Site footer">
       <div className="container mx-auto max-w-7xl px-4 py-16">
@@ -116,7 +86,7 @@ const Footer: React.FC = () => {
           />
         </div>
 
-        <Divider className="my-10 bg-gray-800" />
+        <div className="my-10 bg-gray-800 h-[0.5px]" />
 
         <div className="text-center text-sm text-gray-400">
           <p>© {new Date().getFullYear()} TrekOn. All rights reserved.</p>
@@ -126,4 +96,4 @@ const Footer: React.FC = () => {
   );
 };
 
-export default memo(Footer);
+export default Footer;

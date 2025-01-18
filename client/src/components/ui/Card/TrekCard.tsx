@@ -1,8 +1,7 @@
-import { Avatar, Button, Chip } from "@nextui-org/react";
+import { Avatar, Chip } from "@nextui-org/react";
 import { CalendarDays, UsersRound } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
-import React from "react";
+import ButtonClient from "../ButtonClient/ButtonClient";
 
 type TrekData = {
   id: number;
@@ -99,13 +98,14 @@ const TrekCard = ({ trek }: { trek: TrekData }) => {
             <span className="font-bold text-lg sm:text-xl text-white">
               ${trek.price.toLocaleString()}
             </span>
-            <Button
-              as={Link}
+            <ButtonClient
+              size="md"
+              variant="solid"
               href={`/trek/${trek.id}`}
-              className="text-black bg-white text-sm"
+              className="text-black bg-white"
             >
               View Details
-            </Button>
+            </ButtonClient>
           </div>
         </div>
       </div>
@@ -113,4 +113,4 @@ const TrekCard = ({ trek }: { trek: TrekData }) => {
   );
 };
 
-export default React.memo(TrekCard);
+export default TrekCard;

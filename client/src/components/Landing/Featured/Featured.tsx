@@ -1,9 +1,6 @@
-"use client";
 import { ChevronRight } from "lucide-react";
-import React from "react";
-import Carousel from "../../Carousel/Carousel";
-import { Button } from "@nextui-org/react";
-import Link from "next/link";
+import Carousel from "../../ui/Carousel/Carousel";
+import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
 
 const Featured = () => {
   return (
@@ -11,15 +8,15 @@ const Featured = () => {
       <div className="container mx-auto max-w-7xl flex flex-col gap-10">
         <div className="flex items-center justify-between mb-6 sm:mb-8">
           <h1 className="text-2xl sm:text-3xl font-semibold">Featured Treks</h1>
-          <Button
+          <ButtonClient
             variant="flat"
+            size="md"
             className="bg-black text-white"
-            as={Link}
             href="/trek"
           >
             View All
             <ChevronRight className="w-4" />
-          </Button>
+          </ButtonClient>
         </div>
         <Carousel />
       </div>
@@ -27,4 +24,4 @@ const Featured = () => {
   );
 };
 
-export default React.memo(Featured);
+export default Featured;

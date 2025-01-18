@@ -1,10 +1,9 @@
 "use client";
 import React from "react";
 import { MoveLeft } from "lucide-react";
-import { Button } from "@nextui-org/react";
-import Link from "next/link";
 import Header from "@/components/Shared/Header/Header";
 import Footer from "@/components/Shared/Footer/Footer";
+import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
 
 const NotFound = () => {
   return (
@@ -38,8 +37,7 @@ const NotFound = () => {
 
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
-            <Button
-              as={Link}
+            <ButtonClient
               href={"/"}
               size="lg"
               className="bg-black text-white hover:bg-gray-800 hover:scale-105 
@@ -47,7 +45,7 @@ const NotFound = () => {
             >
               <MoveLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               Back to Home
-            </Button>
+            </ButtonClient>
           </div>
         </div>
       </main>

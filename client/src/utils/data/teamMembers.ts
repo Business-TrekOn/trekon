@@ -6,7 +6,7 @@ interface TeamMember {
 
 export const teamMembers: TeamMember[] = [
   {
-    name: "Rounak Das",
+    name: "Raunak Das",
     role: "UI/UX Designer",
     image: "/rounak.jpg",
   },
@@ -31,7 +31,7 @@ export const teamMembers: TeamMember[] = [
     image: "/swastik.jpg",
   },
   {
-    name: "Subendhu Dutta Banik",
+    name: "Subhendu Dutta Banik",
     role: "Chill Guy",
     image: "/subhendu.jpg",
   },

@@ -1,142 +1,198 @@
 "use client";
-import React from "react";
-import Image from "next/image";
 
-const Page = () => {
+import React, { useState } from "react";
+import { Input, Textarea } from "@nextui-org/react";
+import { Mail, Phone, MapPin } from "lucide-react";
+import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
+import { footerLinks } from "@/utils/data/footerLinks";
+import Image from "next/image";
+import Header from "@/components/Shared/Header/Header";
+import Footer from "@/components/Shared/Footer/Footer";
+
+const ContactPage = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleInputChange = (e: { target: { name: any; value: any } }) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    console.log("Form Data:", formData);
+    setFormData({ name: "", email: "", message: "" });
+  };
+
   return (
-    <section className="min-h-screen flex flex-col bg-black text-white">
+    <section className="min-h-screen bg-white">
+      <Header isDark={false} />
       {/* Hero Section */}
-      <div className="relative h-[400px] flex items-center justify-center">
+      <div className="mt-20 relative h-[400px] flex items-center justify-center">
         <Image
-          src="/hero-cover.png" // Replace with your hero image
-          alt="Contact Us"
+          src="/hero-cover.png"
+          alt="Contact Hero Background"
           fill
-          className="object-cover"
+          priority
+          className="object-cover brightness-50"
         />
-        <div className="absolute inset-0 bg-black/50" />
-        <h1 className="relative text-4xl lg:text-6xl font-bold text-white z-10">
-          Contact Us
+        <h1 className="relative text-4xl md:text-5xl font-bold text-white z-10">
+          Let&apos;s Connect
         </h1>
       </div>
 
       {/* Main Content */}
-      <main className="flex-grow py-12 px-6 md:px-12 lg:px-20">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <main className="py-16 px-4 md:px-8 max-w-7xl container mx-auto">
+        <div className="flex lg:flex-row flex-col lg:justify-between gap-12 items-center">
           {/* Contact Form */}
-          <div className="bg-white text-black p-8 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-6">Get in Touch</h2>
-            <form className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium mb-2">Name</label>
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-gray-400"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">Email</label>
-                <input
-                  type="email"
-                  placeholder="Your Email"
-                  className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-gray-400"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  Message
-                </label>
-                <textarea
-                  placeholder="Your Message"
-                  className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-gray-400"
-                  rows={4}
-                  required
-                />
-              </div>
-              <button
+          <div className="bg-white shadow-xl rounded-2xl p-8 border border-gray-100 min-w-[50%]">
+            <h2 className="text-2xl font-bold text-black mb-12">
+              Send us a message
+            </h2>
+            <form onSubmit={handleSubmit} className="space-y-12">
+              <Input
+                type="text"
+                name="name"
+                label="Name"
+                labelPlacement="outside"
+                placeholder="Enter your name"
+                value={formData.name}
+                onChange={handleInputChange}
+                variant="flat"
+                radius="lg"
+                classNames={{
+                  input: "text-black",
+                  label: "text-black",
+                }}
+                isRequired
+              />
+              <Input
+                type="email"
+                name="email"
+                label="Email"
+                labelPlacement="outside"
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={handleInputChange}
+                variant="flat"
+                radius="lg"
+                classNames={{
+                  input: "text-black",
+                  label: "text-black",
+                }}
+                isRequired
+              />
+              <Textarea
+                name="message"
+                label="Message"
+                labelPlacement="outside"
+                placeholder="Type your message here..."
+                value={formData.message}
+                onChange={handleInputChange}
+                variant="flat"
+                radius="lg"
+                minRows={4}
+                classNames={{
+                  input: "text-black",
+                  label: "text-black",
+                }}
+                isRequired
+              />
+              <ButtonClient
                 type="submit"
-                className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition-all"
+                className="w-full bg-black text-white py-6"
+                size="lg"
               >
                 Send Message
-              </button>
+              </ButtonClient>
             </form>
           </div>
 
           {/* Contact Info */}
-          <div className="flex flex-col justify-between space-y-12">
-            <div>
-              <h2 className="text-2xl font-bold mb-4">Contact Information</h2>
-              <p className="text-gray-300 mb-4">
-                Reach out to us for inquiries, collaborations, or support. We
-                are here to help!
-              </p>
-              <ul className="space-y-4">
-                <li className="flex items-center">
-                  <span className="material-icons-outlined text-2xl mr-4">
-                    email
-                  </span>
-                  <p className="text-gray-400">support@yourcompany.com</p>
-                </li>
-                <li className="flex items-center">
-                  <span className="material-icons-outlined text-2xl mr-4">
-                    phone
-                  </span>
-                  <p className="text-gray-400">+1 234 567 890</p>
-                </li>
-                <li className="flex items-center">
-                  <span className="material-icons-outlined text-2xl mr-4">
-                    location_on
-                  </span>
-                  <p className="text-gray-400">
-                    123 Main Street, City, Country
-                  </p>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold mb-4">Follow Us</h2>
-              <div className="flex gap-6">
-                <a
-                  href="https://facebook.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center hover:bg-gray-200 transition-all"
-                >
-                  <i className="fab fa-facebook-f"></i>
-                </a>
-                <a
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center hover:bg-gray-200 transition-all"
-                >
-                  <i className="fab fa-twitter"></i>
-                </a>
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center hover:bg-gray-200 transition-all"
-                >
-                  <i className="fab fa-instagram"></i>
-                </a>
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center hover:bg-gray-200 transition-all"
-                >
-                  <i className="fab fa-linkedin-in"></i>
-                </a>
+          <div className="lg:pl-8">
+            <div className="space-y-12">
+              <div>
+                <h2 className="text-2xl font-bold text-black mb-6">
+                  Contact Information
+                </h2>
+                <p className="text-gray-600 mb-8 text-lg">
+                  Have questions? We&apos;re here to help. Reach out to us
+                  through any of these channels.
+                </p>
+                <ul className="space-y-6">
+                  <li className="flex items-center space-x-4">
+                    <div className="w-12 h-12 rounded-full bg-black flex items-center justify-center">
+                      <Mail className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Email</p>
+                      <p className="text-black font-medium">
+                        support@yourcompany.com
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex items-center space-x-4">
+                    <div className="w-12 h-12 rounded-full bg-black flex items-center justify-center">
+                      <Phone className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Phone</p>
+                      <p className="text-black font-medium">+1 234 567 890</p>
+                    </div>
+                  </li>
+                  <li className="flex items-center space-x-4">
+                    <div className="w-12 h-12 rounded-full bg-black flex items-center justify-center">
+                      <MapPin className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Address</p>
+                      <p className="text-black font-medium">
+                        123 Main Street, City, Country
+                      </p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Social Links */}
+              <div>
+                <h2 className="text-2xl font-bold text-black mb-6">
+                  Follow Us
+                </h2>
+                <div className="flex gap-3">
+                  {footerLinks.follow_us.map((social, index) => (
+                    <ButtonClient
+                      key={index}
+                      radius="full"
+                      href={social.link}
+                      variant="bordered"
+                      className="w-12 h-12 
+                      bg-black rounded-full"
+                    >
+                      <Image
+                        src={social.logo}
+                        alt="social-logo"
+                        width={24}
+                        height={24}
+                      />
+                    </ButtonClient>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </main>
+      <Footer />
     </section>
   );
 };
 
-export default Page;
+export default ContactPage;

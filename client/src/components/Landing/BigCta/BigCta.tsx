@@ -1,7 +1,5 @@
-"use client";
 import React from "react";
-import { Button } from "@nextui-org/react";
-import Link from "next/link";
+import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
 
 const BigCta = () => {
   return (
@@ -19,23 +17,22 @@ const BigCta = () => {
           </p>
         </div>
         <div className="flex flex-col md:flex-row gap-4">
-          <Button
-            as={Link}
+          <ButtonClient
+            variant="solid"
             href="/auth/user/register"
             size="lg"
             className="text-black bg-white"
           >
             Start Your Adventure
-          </Button>
-          <Button
+          </ButtonClient>
+          <ButtonClient
             size="lg"
             variant="bordered"
-            as={Link}
             href="/auth/sherpa/register"
             className="bg-transparent text-white"
           >
             Become a Sherpa Partner
-          </Button>
+          </ButtonClient>
         </div>
       </div>
     </section>
@@ -43,4 +40,4 @@ const BigCta = () => {
 };
 
 // Memoize the component to prevent unnecessary re-renders
-export default React.memo(BigCta);
+export default BigCta;

@@ -1,8 +1,5 @@
-"use client";
-import React from "react";
-import { Button } from "@nextui-org/react";
 import Image from "next/image";
-import Link from "next/link";
+import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
 
 const Guidelines = () => {
   return (
@@ -31,15 +28,14 @@ const Guidelines = () => {
             Ganges-Brahmaputra systems generally take easterly courses while
             flowing through the mountain region.
           </p>
-          <Button
+          <ButtonClient
             size="lg"
-            as={Link}
+            variant="solid"
             href="/trekking-guidelines"
-            className="bg-black text-white hover:opacity-90 transition-opacity"
-            aria-label="Learn more about trekking guidelines"
+            className="bg-black text-white"
           >
             Learn More
-          </Button>
+          </ButtonClient>
         </div>
         <div className="w-full md:w-1/2" data-aos="fade-left">
           <div className="relative aspect-square max-w-[500px] mx-auto">
@@ -59,4 +55,4 @@ const Guidelines = () => {
 };
 
 // Memoize the component to prevent unnecessary re-renders
-export default React.memo(Guidelines);
+export default Guidelines;
