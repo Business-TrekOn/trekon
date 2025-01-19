@@ -2,16 +2,8 @@
 import TrekCard from "@/components/ui/Card/TrekCard";
 import Footer from "@/components/Shared/Footer/Footer";
 import Header from "@/components/Shared/Header/Header";
-import { locations } from "@/utils/data/locations";
 import { treks } from "@/utils/data/treks";
-import {
-  Autocomplete,
-  AutocompleteItem,
-  DateRangePicker,
-} from "@nextui-org/react";
-import { MapPin } from "lucide-react";
-import Link from "next/link";
-import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
+import SearchForm from "@/components/Forms/SearchForm";
 
 const Trek = () => {
   return (
@@ -27,39 +19,7 @@ const Trek = () => {
             </h1>
 
             {/* Search Container */}
-            <div className="w-full max-w-3xl flex flex-col gap-6">
-              <div className="flex flex-col md:flex-row gap-4 w-full">
-                <Autocomplete
-                  placeholder="Location"
-                  className="flex-1 min-w-[200px]"
-                  startContent={<MapPin className="text-gray-500" />}
-                  variant="flat"
-                >
-                  {locations.map((location) => (
-                    <AutocompleteItem key={location.key} value={location.key}>
-                      {location.label}
-                    </AutocompleteItem>
-                  ))}
-                </Autocomplete>
-
-                <DateRangePicker
-                  aria-label="Select Dates"
-                  className="flex-1 min-w-[200px]"
-                  variant="flat"
-                  selectorButtonPlacement="start"
-                />
-
-                <Link href="/search" className="md:w-auto w-full">
-                  <ButtonClient
-                    href={`/trek`}
-                    className="bg-black text-white w-full h-full min-h-[40px]"
-                    size="lg"
-                  >
-                    Search
-                  </ButtonClient>
-                </Link>
-              </div>
-            </div>
+            <SearchForm isDark={false} />
           </div>
         </section>
 

@@ -1,14 +1,6 @@
-"use client";
-import {
-  Autocomplete,
-  AutocompleteItem,
-  DateRangePicker,
-} from "@nextui-org/react";
 import Image from "next/image";
 import CoverImage from "../../../../public/hero-cover.png";
-import { MapPin } from "lucide-react";
-import { locations } from "@/utils/data/locations";
-import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
+import SearchForm from "@/components/Forms/SearchForm";
 
 const Hero = () => {
   return (
@@ -35,34 +27,7 @@ const Hero = () => {
           The journey of a thousand miles begins with a single
           step into the wild.
         </p>
-        <div className="flex gap-5 flex-col md:flex-row">
-          {/* Location component */}
-          <Autocomplete
-            className="max-w-xs text-black border-gray-500"
-            placeholder="Location"
-            color="default"
-            startContent={<MapPin className="text-gray-500" />}
-            variant="flat"
-          >
-            {locations.map((location) => (
-              <AutocompleteItem key={location.key}>
-                {location.label}
-              </AutocompleteItem>
-            ))}
-          </Autocomplete>
-
-          {/* Date Component */}
-
-          <DateRangePicker
-            aria-label="Date"
-            selectorButtonPlacement="start"
-            className="max-w-xs"
-            variant="flat"
-          />
-        </div>
-        <ButtonClient href="/trek" className="text-black bg-white">
-          Search for Trek
-        </ButtonClient>
+        <SearchForm isDark={true} />
       </div>
     </section>
   );

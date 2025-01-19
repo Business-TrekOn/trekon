@@ -154,7 +154,7 @@ const ContactPage = () => {
                     <div>
                       <p className="text-sm text-gray-500">Address</p>
                       <p className="text-black font-medium">
-                        123 Main Street, City, Country
+                        Kolkata, West Bengal, India
                       </p>
                     </div>
                   </li>

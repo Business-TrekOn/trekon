@@ -9,13 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@internationalized/date": "^3.5.5",
     "@nextui-org/react": "^2.6.11",
     "clsx": "^2.1.1",
     "framer-motion": "^11.18.0",
     "lucide-react": "^0.471.1",
     "next": "15.1.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.54.2",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
