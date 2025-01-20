@@ -7,7 +7,11 @@ import { featuredTreks } from "@/utils/data/featuredTreks";
 const Carousel = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(3);
+  const [dragStart, setDragStart] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
   const controls = useAnimation();
+  const dragThreshold = 50; // Drag distance to change pages (this could be adjusted)
+  const totalTreks = featuredTreks.length;
 
   useEffect(() => {
     const handleResize = () => {
@@ -29,29 +33,42 @@ const Carousel = () => {
     setCurrentPage(0);
   }, [itemsPerView]);
 
-  const totalPages = Math.ceil(featuredTreks.length / itemsPerView);
+  const totalPages = Math.ceil(totalTreks / itemsPerView);
 
+  // Handle the drag start
+  const handleDragStart = (event: PointerEvent) => {
+    setDragStart(event.clientX);
+    controls.stop(); // Stop any ongoing animations
+  };
+
+  // Handle the dragging event
+  const handleDrag = (event: PointerEvent) => {
+    const dragDistance = event.clientX - dragStart;
+    setDragOffset(dragDistance);
+  };
+
+  // Handle the drag end
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleDragEnd = (_event: PointerEvent, info: any) => {
-    const dragOffset = info.offset.x;
-    const threshold = 100; // Minimum drag distance to change pages
+  const handleDragEnd = (event: PointerEvent, info: any) => {
+    const dragDistance = info.offset.x;
 
-    if (dragOffset < -threshold && currentPage < totalPages - 1) {
-      setCurrentPage((prev) => prev + 1);
-    } else if (dragOffset > threshold && currentPage > 0) {
-      setCurrentPage((prev) => prev - 1);
-    } else {
-      // Snap back to the current page if drag is insufficient
-      controls.start({ x: -currentPage * 100 + "%" });
+    // When dragging right or left, decide to move to the next or previous page
+    if (dragDistance < -dragThreshold) {
+      setCurrentPage((prev) => (prev + 1) % totalPages); // Move to next page
+    } else if (dragDistance > dragThreshold) {
+      setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages); // Move to previous page
     }
+
+    // Reset the drag offset to zero after drag ends
+    setDragOffset(0);
   };
 
   useEffect(() => {
     controls.start({
       x: -currentPage * 100 + "%",
       transition: {
-        duration: 0.8, // Slower animation duration
-        ease: [0.6, 0.05, -0.01, 0.9], // Smooth modern easing curve
+        duration: 0.6, // Smoother transition duration
+        ease: [0.25, 0.8, 0.25, 1], // Smooth cubic bezier easing
       },
     });
   }, [currentPage, controls]);
@@ -65,10 +82,15 @@ const Carousel = () => {
             className="flex transition-transform duration-300 ease-out"
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
+            onDragStart={handleDragStart}
+            dragElastic={0}
+            onDrag={handleDrag} // Continuous drag update
             onDragEnd={handleDragEnd}
             animate={controls}
             style={{
               display: "flex",
+              scrollBehavior: "smooth", // Smooth scroll when user scrolls
+              x: `-${currentPage * 100 + dragOffset / 10}%`, // Make the drag move with the user's hand
             }}
           >
             {/* Individual slides */}
