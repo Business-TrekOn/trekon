@@ -6,7 +6,7 @@ import ButtonClient from "../ButtonClient/ButtonClient";
 type TrekData = {
   id: number;
   title: string;
-  guide: {
+  sherpa: {
     name: string;
     experience: string;
     avatar: string;
@@ -53,16 +53,16 @@ const TrekCard = ({ trek }: { trek: TrekData }) => {
 
         <div className="flex items-center gap-2 px-4 sm:px-6 pt-4 sm:pt-6">
           <Avatar
-            src={trek.guide.avatar}
-            alt={trek.guide.name}
+            src={trek.sherpa.avatar}
+            alt={trek.sherpa.name}
             className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border-2 border-white"
           />
           <div className="flex flex-col gap-0.5 sm:gap-1">
             <span className="text-white text-sm font-medium">
-              {trek.guide.name}
+              {trek.sherpa.name}
             </span>
             <span className="text-gray-500 text-xs font-normal">
-              {trek.guide.experience} years experience
+              {trek.sherpa.experience} years experience
             </span>
           </div>
         </div>

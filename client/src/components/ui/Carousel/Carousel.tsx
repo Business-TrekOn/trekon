@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import TrekCard from "../Card/TrekCard";
 import { motion, useAnimation } from "framer-motion";
-import { treks } from "@/utils/data/treks";
+import { featuredTreks } from "@/utils/data/featuredTreks";
 
 const Carousel = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -29,8 +29,7 @@ const Carousel = () => {
     setCurrentPage(0);
   }, [itemsPerView]);
 
-  const sponsoredTreks = treks.filter((trek) => trek.isSponsored);
-  const totalPages = Math.ceil(sponsoredTreks.length / itemsPerView);
+  const totalPages = Math.ceil(featuredTreks.length / itemsPerView);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDragEnd = (_event: PointerEvent, info: any) => {
@@ -73,7 +72,7 @@ const Carousel = () => {
             }}
           >
             {/* Individual slides */}
-            {sponsoredTreks.map((trek) => (
+            {featuredTreks.map((trek) => (
               <motion.div
                 key={trek.id}
                 className="w-full flex-none md:w-1/2 lg:w-1/3 px-4"

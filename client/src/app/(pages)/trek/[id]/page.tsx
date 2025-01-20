@@ -4,13 +4,28 @@ import Header from "@/components/Shared/Header/Header";
 import Image from "next/image";
 import { Calendar, Users, Mountain, MapPin } from "lucide-react";
 import { Avatar, Chip } from "@nextui-org/react";
-import { trekDays } from "@/utils/data/trekDays";
+import { trekDetails } from "@/utils/data/trekDetails";
 import { motion } from "framer-motion";
 import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
 import PhotoGallery from "@/components/ui/PhotoGallery/PhotoGallery";
 import ProgressBarClient from "@/components/ui/ProgressBarClient/ProgressBarClient";
 
 const TrekDetails = () => {
+  const {
+    title,
+    description,
+    duration,
+    groupSize,
+    difficulty,
+    startingPoint,
+    price,
+    availableSlots,
+    bookingDeadline,
+    coverImage,
+    trekDays,
+    sherpa,
+  } = trekDetails;
+
   return (
     <section className="min-h-screen flex flex-col">
       <Header isDark={false} />
@@ -23,8 +38,8 @@ const TrekDetails = () => {
           transition={{ duration: 0.6 }}
         >
           <Image
-            src="/card-image-placeholder.png"
-            alt="Everest Base Camp"
+            src={coverImage}
+            alt={title}
             className="object-cover brightness-50"
             fill
             loading="lazy"
@@ -32,44 +47,45 @@ const TrekDetails = () => {
           <div className="absolute inset-0 bg-black/30" />
           <div className="absolute inset-0 flex flex-col justify-center items-center px-4 md:px-8 lg:px-16 max-w-7xl mx-auto">
             <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4">
-              Everest Base Camp Trek
+              {title}
             </h1>
-            <p className="md:text-xl text-lg text-white">
-              14 Days of Adventure at the Top of the World
-            </p>
+            <p className="md:text-xl text-lg text-white">{description}</p>
           </div>
         </motion.section>
 
         {/* Trek Info Section */}
         <section className="py-8 px-4 md:px-8 lg:px-20">
           <div className="max-w-7xl mx-auto">
-            <div className="flex flex-wrap justify-between items-center mb-12">
-              <div className="flex items-center gap-3 px-5 py-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full mb-12 mx-auto">
+              <div className="flex items-center gap-3 py-2">
                 <Calendar className="w-6 h-6" />
                 <div>
                   <p className="text-sm text-gray-600">Duration</p>
-                  <p className="font-semibold">14 Days</p>
+                  <p className="font-semibold">{duration}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 px-5 py-2">
+
+              <div className="flex items-center gap-3 py-2">
                 <Users className="w-6 h-6" />
                 <div>
                   <p className="text-sm text-gray-600">Group Size</p>
-                  <p className="font-semibold">4-12 People</p>
+                  <p className="font-semibold">{groupSize}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 px-5 py-2">
+
+              <div className="flex items-center gap-3 py-2">
                 <Mountain className="w-6 h-6" />
                 <div>
                   <p className="text-sm text-gray-600">Difficulty</p>
-                  <p className="font-semibold">Challenging</p>
+                  <p className="font-semibold">{difficulty}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 px-5 py-2">
+
+              <div className="flex items-center gap-3 py-2">
                 <MapPin className="w-6 h-6" />
                 <div>
                   <p className="text-sm text-gray-600">Starting Point</p>
-                  <p className="font-semibold">Kathmandu</p>
+                  <p className="font-semibold">{startingPoint}</p>
                 </div>
               </div>
             </div>
@@ -84,7 +100,7 @@ const TrekDetails = () => {
                       <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                         <Image
                           src={day.icon}
-                          alt="icon"
+                          alt={day.title}
                           width={48}
                           height={48}
                         />
@@ -105,7 +121,7 @@ const TrekDetails = () => {
               <div className="lg:col-span-1">
                 <div className="bg-white p-6 rounded-lg shadow-lg">
                   <div className="mb-6">
-                    <span className="text-3xl font-bold">$2,499</span>
+                    <span className="text-3xl font-bold">{price}</span>
                     <span className="text-gray-600 ml-2">per person</span>
                   </div>
 
@@ -113,9 +129,11 @@ const TrekDetails = () => {
                     <p className="font-semibold mb-2">Available Slots</p>
                     <ProgressBarClient value={75} />
                     <div className="flex justify-between mt-2">
-                      <span className="text-sm text-gray-600">8/12</span>
                       <span className="text-sm text-gray-600">
-                        Book before January 30, 2025
+                        {availableSlots}
+                      </span>
+                      <span className="text-sm text-gray-600">
+                        Book before {bookingDeadline}
                       </span>
                     </div>
                   </div>
@@ -133,20 +151,19 @@ const TrekDetails = () => {
                     <div className="flex items-center gap-4">
                       <Avatar
                         className="w-20 h-20 text-large"
-                        src="/avatar-placeholder.png"
+                        src={sherpa.avatar}
                       />
                       <div>
-                        <p className="font-semibold">Pemba Sherpa</p>
+                        <p className="font-semibold">{sherpa.name}</p>
                         <p className="text-sm text-gray-600">
-                          12+ years experience
+                          {sherpa.experience}
                         </p>
                         <div className="flex gap-2 mt-2">
-                          <Chip size="sm" radius="md">
-                            IFMGA Certified
-                          </Chip>
-                          <Chip size="sm" radius="md">
-                            First Aid
-                          </Chip>
+                          {sherpa.certifications.map((cert, index) => (
+                            <Chip key={index} size="sm" radius="md">
+                              {cert}
+                            </Chip>
+                          ))}
                         </div>
                       </div>
                     </div>

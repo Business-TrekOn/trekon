@@ -1,31 +1,39 @@
-// ContactUsClient.tsx
 "use client"; // This directive ensures that this component is treated as a client component
 
-import React, { useState } from "react";
+import React from "react";
+import { useForm, Controller } from "react-hook-form";
+
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+}
 
 const ContactUsClient = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<FormData>({
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
   });
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log("Form Data Submitted:", formData);
-    // Resetting form data
-    setFormData({ name: "", email: "", message: "" });
+  const onSubmit = (data: FormData) => {
+    console.log("Form Data Submitted:", JSON.stringify(data, null, 2));
+    // Reset form after submission
+    reset();
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="bg-white p-6 rounded-lg shadow-lg"
+    >
       <div className="mb-4">
         <label
           htmlFor="name"
@@ -33,16 +41,28 @@ const ContactUsClient = () => {
         >
           Name
         </label>
-        <input
-          type="text"
+        <Controller
           name="name"
-          id="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+          control={control}
+          rules={{ required: "Name is required" }}
+          render={({ field }) => (
+            <>
+              <input
+                {...field}
+                type="text"
+                id="name"
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+              />
+              {errors.name && (
+                <span className="text-red-500 text-sm">
+                  {errors.name.message}
+                </span>
+              )}
+            </>
+          )}
         />
       </div>
+
       <div className="mb-4">
         <label
           htmlFor="email"
@@ -50,16 +70,34 @@ const ContactUsClient = () => {
         >
           Email
         </label>
-        <input
-          type="email"
+        <Controller
           name="email"
-          id="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+          control={control}
+          rules={{
+            required: "Email is required",
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Enter a valid email address",
+            },
+          }}
+          render={({ field }) => (
+            <>
+              <input
+                {...field}
+                type="email"
+                id="email"
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+              />
+              {errors.email && (
+                <span className="text-red-500 text-sm">
+                  {errors.email.message}
+                </span>
+              )}
+            </>
+          )}
         />
       </div>
+
       <div className="mb-4">
         <label
           htmlFor="message"
@@ -67,16 +105,28 @@ const ContactUsClient = () => {
         >
           Message
         </label>
-        <textarea
+        <Controller
           name="message"
-          id="message"
-          value={formData.message}
-          onChange={handleChange}
-          required
-          rows={4}
-          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
-        ></textarea>
+          control={control}
+          rules={{ required: "Message is required" }}
+          render={({ field }) => (
+            <>
+              <textarea
+                {...field}
+                id="message"
+                rows={4}
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+              ></textarea>
+              {errors.message && (
+                <span className="text-red-500 text-sm">
+                  {errors.message.message}
+                </span>
+              )}
+            </>
+          )}
+        />
       </div>
+
       <button
         type="submit"
         className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200"

@@ -1,4 +1,6 @@
-export const locations = [
+import { LocationType } from "@/types/locationType";
+
+export const locations: LocationType[] = [
   { label: "Sandakphu", key: "sdp" },
   { label: "Valley of Flowers", key: "vof" },
   { label: "Roopkund", key: "rkd" },

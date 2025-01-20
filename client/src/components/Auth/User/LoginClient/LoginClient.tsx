@@ -1,11 +1,11 @@
-// LoginClient.tsx
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Input } from "@nextui-org/react";
 import { Eye, EyeClosed } from "lucide-react";
 import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
+import { useForm, Controller } from "react-hook-form";
 
 interface LoginFormData {
   email: string;
@@ -13,33 +13,29 @@ interface LoginFormData {
 }
 
 const LoginClient = () => {
-  const [formData, setFormData] = useState<LoginFormData>({
-    email: "",
-    password: "",
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    mode: "onChange",
   });
 
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (formData.password.length < 8) {
-      return;
-    }
-    // Handle login logic here (e.g., API call)
-    console.log("Form submitted:", formData);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    if (name === "password" && value.length > 12) {
-      return;
-    }
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const onSubmit = (data: LoginFormData) => {
+    const LoginUserPayload = {
+      email: data.email,
+      password: data.password,
+    };
+    console.log(
+      "LoginUser Payload:",
+      JSON.stringify(LoginUserPayload, null, 2)
+    );
   };
 
   const togglePasswordVisibility = () => {
@@ -48,7 +44,6 @@ const LoginClient = () => {
 
   return (
     <main className="min-h-screen flex p-8">
-      {/* Left side - Login Form */}
       <section className="w-full md:w-1/2 flex items-center justify-center p-8">
         <div className="w-full max-w-md space-y-8">
           <div className="space-y-3">
@@ -59,21 +54,33 @@ const LoginClient = () => {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-1">
               <label htmlFor="email" className="block text-md font-medium">
                 Email
               </label>
-              <Input
-                id="email"
+              <Controller
                 name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Email"
-                className="w-full py-2 rounded-md"
-                size="lg"
-                type="email"
-                required
+                control={control}
+                rules={{
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Invalid email address",
+                  },
+                }}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="email"
+                    type="email"
+                    placeholder="Email"
+                    className="w-full py-2 rounded-md"
+                    size="lg"
+                    isInvalid={!!errors.email}
+                    errorMessage={errors.email?.message}
+                  />
+                )}
               />
             </div>
 
@@ -81,18 +88,32 @@ const LoginClient = () => {
               <label htmlFor="password" className="block text-md font-medium">
                 Password
               </label>
-              <Input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                size="lg"
+              <Controller
                 name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                placeholder="Password (8-12)"
-                className="w-full py-2 rounded-md"
-                minLength={8}
-                maxLength={12}
-                required
+                control={control}
+                rules={{
+                  required: "Password is required",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be at least 8 characters",
+                  },
+                  maxLength: {
+                    value: 12,
+                    message: "Password must not exceed 12 characters",
+                  },
+                }}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password (8-12)"
+                    className="w-full py-2 rounded-md"
+                    size="lg"
+                    isInvalid={!!errors.password}
+                    errorMessage={errors.password?.message}
+                  />
+                )}
               />
               <span
                 onClick={togglePasswordVisibility}
@@ -132,11 +153,10 @@ const LoginClient = () => {
         </div>
       </section>
 
-      {/* Right side - Image */}
       <section className="hidden md:block md:w-1/2 bg-black rounded-xl overflow-hidden">
         <div className="h-full w-full relative overflow-hidden">
           <Image
-            src="/auth-image.png" // Ensure this image is in your public folder
+            src="/auth-image.png"
             alt="Decorative floral still life painting"
             className="object-cover"
             fill

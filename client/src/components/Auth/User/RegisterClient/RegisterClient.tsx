@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import Image from "next/image";
 import Link from "next/link";
 import { Input, Select, SelectItem } from "@nextui-org/react";
@@ -18,70 +19,27 @@ interface LoginFormData {
 }
 
 const RegisterClient = () => {
-  const [formData, setFormData] = useState<LoginFormData>({
-    first_name: "",
-    last_name: "",
-    country_code: "+91",
-    phone_no: "",
-    email: "",
-    password: "",
-    adhaar_no: "",
-  });
-
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (
-      formData.password.length < 8 ||
-      formData.phone_no.length !== 10 ||
-      !/^\d+$/.test(formData.phone_no) ||
-      !/^\d+$/.test(formData.adhaar_no) ||
-      formData.adhaar_no.length !== 12
-    ) {
-      return;
-    }
-    // Handle login logic here with country code
-    console.log("Form submitted:", {
-      ...formData,
-      phone_no: formData.phone_no,
-    });
-  };
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    defaultValues: {
+      first_name: "",
+      last_name: "",
+      country_code: "+91",
+      phone_no: "",
+      email: "",
+      password: "",
+      adhaar_no: "",
+    },
+  });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    if (name === "password" && value.length > 12) {
-      return;
-    }
-
-    if (name === "phone_no" && !/^\d*$/.test(value)) {
-      return;
-    }
-
-    if (name === "phone_no" && value.length > 10) {
-      return;
-    }
-
-    if (name === "adhaar_no" && !/^\d*$/.test(value)) {
-      return;
-    }
-
-    if (name === "adhaar_no" && value.length > 12) {
-      return;
-    }
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleCountryCodeChange = (value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      country_code: value,
-    }));
+  const onSubmit = (data: LoginFormData) => {
+    console.log("Form submitted:", JSON.stringify(data, null, 2));
+    // API call will be made here in the future
   };
 
   const togglePasswordVisibility = () => {
@@ -90,7 +48,7 @@ const RegisterClient = () => {
 
   return (
     <main className="min-h-screen flex p-8">
-      {/* Left side - Login Form */}
+      {/* Left side - Register Form */}
       <section className="w-full md:w-1/2 flex items-center justify-center p-8">
         <div className="w-full max-w-md space-y-8">
           <div className="space-y-3">
@@ -101,148 +59,212 @@ const RegisterClient = () => {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* First Name and Last Name side by side */}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1">
-                <label
-                  htmlFor="first_name"
-                  className="block text-md font-medium"
-                >
-                  First Name
-                </label>
-                <Input
-                  id="first_name"
-                  name="first_name"
-                  value={formData.first_name}
-                  onChange={handleInputChange}
-                  placeholder="First Name"
-                  className="w-full py-2 rounded-md"
-                  size="lg"
-                  type="text"
-                  required
-                />
-              </div>
+              <Controller
+                name="first_name"
+                control={control}
+                rules={{ required: "First name is required" }}
+                render={({ field }) => (
+                  <div className="space-y-1">
+                    <label
+                      htmlFor="first_name"
+                      className="block text-md font-medium"
+                    >
+                      First Name
+                    </label>
+                    <Input
+                      {...field}
+                      id="first_name"
+                      placeholder="First Name"
+                      size="lg"
+                      required
+                      className={errors.first_name ? "border-red-500" : ""}
+                    />
+                    {errors.first_name && (
+                      <span className="text-red-500 text-sm">
+                        {errors.first_name.message}
+                      </span>
+                    )}
+                  </div>
+                )}
+              />
 
-              <div className="space-y-1">
-                <label
-                  htmlFor="last_name"
-                  className="block text-md font-medium"
-                >
-                  Last Name
-                </label>
-                <Input
-                  id="last_name"
-                  name="last_name"
-                  value={formData.last_name}
-                  onChange={handleInputChange}
-                  placeholder="Last Name"
-                  className="w-full py-2 rounded-md"
-                  size="lg"
-                  type="text"
-                  required
-                />
-              </div>
+              <Controller
+                name="last_name"
+                control={control}
+                rules={{ required: "Last name is required" }}
+                render={({ field }) => (
+                  <div className="space-y-1">
+                    <label
+                      htmlFor="last_name"
+                      className="block text-md font-medium"
+                    >
+                      Last Name
+                    </label>
+                    <Input
+                      {...field}
+                      id="last_name"
+                      placeholder="Last Name"
+                      size="lg"
+                      required
+                      className={errors.last_name ? "border-red-500" : ""}
+                    />
+                    {errors.last_name && (
+                      <span className="text-red-500 text-sm">
+                        {errors.last_name.message}
+                      </span>
+                    )}
+                  </div>
+                )}
+              />
             </div>
 
-            {/* Phone Number with Country Code */}
             <div className="space-y-1">
               <label htmlFor="phone_no" className="block text-md font-medium">
                 Phone Number
               </label>
               <div className="flex gap-2">
-                <Select
-                  defaultSelectedKeys={["+91"]}
-                  value={formData.country_code}
-                  onChange={(e) => handleCountryCodeChange(e.target.value)}
-                  className="w-1/3"
-                  size="lg"
-                  required
-                >
-                  {countryCodes.map((code) => (
-                    <SelectItem key={code.value} value={code.value}>
-                      {code.label}
-                    </SelectItem>
-                  ))}
-                </Select>
-                <Input
-                  id="phone_no"
+                <Controller
+                  name="country_code"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      className="w-1/3"
+                      size="lg"
+                      isRequired
+                      defaultSelectedKeys={[field.value]}
+                    >
+                      {countryCodes.map((code) => (
+                        <SelectItem key={code.value} value={code.value}>
+                          {code.label}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                  )}
+                />
+
+                <Controller
                   name="phone_no"
-                  value={formData.phone_no}
-                  onChange={handleInputChange}
-                  placeholder="Phone Number"
-                  className="w-2/3"
-                  size="lg"
-                  type="text"
-                  required
-                  pattern="\d{10}"
-                  title="Please enter exactly 10 digits"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      placeholder="Phone Number"
+                      size="lg"
+                      required
+                      minLength={10}
+                      className={errors.phone_no ? "border-red-500" : ""}
+                      maxLength={10}
+                    />
+                  )}
                 />
               </div>
+              {errors.phone_no && (
+                <span className="text-red-500 text-sm">
+                  {errors.phone_no.message}
+                </span>
+              )}
             </div>
 
-            <div className="space-y-1">
-              <label htmlFor="email" className="block text-md font-medium">
-                Email
-              </label>
-              <Input
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Email"
-                className="w-full py-2 rounded-md"
-                size="lg"
-                type="email"
-                required
-              />
-            </div>
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <div className="space-y-1">
+                  <label htmlFor="email" className="block text-md font-medium">
+                    Email
+                  </label>
+                  <Input
+                    {...field}
+                    id="email"
+                    placeholder="Email"
+                    size="lg"
+                    required
+                    className={errors.email ? "border-red-500" : ""}
+                  />
+                  {errors.email && (
+                    <span className="text-red-500 text-sm">
+                      {errors.email.message}
+                    </span>
+                  )}
+                </div>
+              )}
+            />
 
-            <div className="space-y-1 relative">
-              <label htmlFor="password" className="block text-md font-medium">
-                Create Password
-              </label>
-              <Input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                size="lg"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                placeholder="Password (8-12)"
-                className="w-full py-2 rounded-md"
-                minLength={8}
-                maxLength={12}
-                required
-              />
-              <span
-                onClick={togglePasswordVisibility}
-                className="absolute right-0 top-8 cursor-pointer text-gray-400 bg-transparent py-3 px-5"
-              >
-                {showPassword ? <Eye /> : <EyeClosed />}
-              </span>
-            </div>
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <div className="space-y-1 relative">
+                  <label
+                    htmlFor="password"
+                    className="block text-md font-medium"
+                  >
+                    Create Password
+                  </label>
+                  <Input
+                    {...field}
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    placeholder="Password (8-12)"
+                    size="lg"
+                    minLength={8}
+                    maxLength={12}
+                    required
+                    className={errors.password ? "border-red-500" : ""}
+                  />
+                  <span
+                    onClick={togglePasswordVisibility}
+                    className="absolute right-0 top-[1.6rem] cursor-pointer text-gray-400 bg-transparent py-3 px-5"
+                  >
+                    {showPassword ? <Eye /> : <EyeClosed />}
+                  </span>
+                  {errors.password && (
+                    <span className="text-red-500 text-sm">
+                      {errors.password.message}
+                    </span>
+                  )}
+                </div>
+              )}
+            />
 
-            <div className="space-y-1">
-              <label htmlFor="adhaar_no" className="block text-md font-medium">
-                Adhaar Card Number
-              </label>
-              <Input
-                id="adhaar_no"
-                name="adhaar_no"
-                value={formData.adhaar_no}
-                onChange={handleInputChange}
-                placeholder="Adhaar Number"
-                className="w-full py-2 rounded-md"
-                size="lg"
-                type="text"
-                pattern="\d*"
-                maxLength={12}
-                minLength={12}
-                title="Please enter only numbers"
-                required
-              />
-            </div>
+            <Controller
+              name="adhaar_no"
+              control={control}
+              rules={{
+                pattern: {
+                  value: /^[0-9]{12}$/,
+                  message: "Enter a valid 12-digit Aadhaar number",
+                },
+              }}
+              render={({ field }) => (
+                <div className="space-y-1">
+                  <label
+                    htmlFor="adhaar_no"
+                    className="block text-md font-medium"
+                  >
+                    Aadhaar Card Number
+                  </label>
+                  <Input
+                    {...field}
+                    id="adhaar_no"
+                    placeholder="Aadhaar Number"
+                    size="lg"
+                    minLength={12}
+                    maxLength={12}
+                    required
+                    className={errors.adhaar_no ? "border-red-500" : ""}
+                  />
+                  {errors.adhaar_no && (
+                    <span className="text-red-500 text-sm">
+                      {errors.adhaar_no.message}
+                    </span>
+                  )}
+                </div>
+              )}
+            />
 
             <ButtonClient
               type="submit"
