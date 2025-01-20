@@ -15,7 +15,8 @@ type TrekData = {
   duration: string;
   groupSizeMin: string;
   groupSizeMax: string;
-  nextAvailable: string;
+  startDate: string;
+  endDate: string;
   price: number;
   image: string;
   isSponsored: boolean;
@@ -89,7 +90,7 @@ const TrekCard = ({ trek }: { trek: TrekData }) => {
             <div className="flex items-center gap-2">
               <CalendarDays className="text-gray-500 w-3.5 sm:w-4" />
               <span className="text-xs sm:text-sm text-gray-500">
-                Starting from : {trek.nextAvailable}
+                Starting from : {trek.startDate}
               </span>
             </div>
           </div>

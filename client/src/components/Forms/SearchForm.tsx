@@ -11,21 +11,20 @@ import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
 import { MapPin } from "lucide-react";
 import { locations } from "@/utils/data/locations";
 import clsx from "clsx";
-import { getLocalTimeZone, parseDate, today } from "@internationalized/date";
+import { usePathname, useRouter } from "next/navigation";
 
 const SearchForm = ({ isDark }: { isDark: boolean }) => {
-  const todayDate = today(getLocalTimeZone());
-  const tenDaysLater = todayDate.add({ days: 10 });
-
   const { setLocation, setDates, location, startDate, endDate } =
     useTrekStore();
+  const pathname = usePathname();
+  const router = useRouter();
 
   const { handleSubmit, control } = useForm({
     defaultValues: {
       location: location || "",
       dateRange: {
-        startDate: startDate || null,
-        endDate: endDate || null,
+        startDate: startDate,
+        endDate: endDate,
       },
     },
   });
@@ -36,7 +35,44 @@ const SearchForm = ({ isDark }: { isDark: boolean }) => {
     setLocation(data.location);
     setDates(data.dateRange?.startDate, data.dateRange?.endDate);
 
-    // Prepare JSON for backend
+    // Build query string for non-/trek routes
+    if (pathname !== "/trek") {
+      const queryParams = new URLSearchParams();
+
+      if (data.location) {
+        queryParams.set("location", data.location);
+      }
+
+      if (data.dateRange?.startDate && data.dateRange?.endDate) {
+        const formattedStartDate = `${String(
+          data.dateRange.startDate.day
+        ).padStart(2, "0")}-${String(data.dateRange.startDate.month).padStart(
+          2,
+          "0"
+        )}-${data.dateRange.startDate.year}`;
+
+        const formattedEndDate = `${String(data.dateRange.endDate.day).padStart(
+          2,
+          "0"
+        )}-${String(data.dateRange.endDate.month).padStart(2, "0")}-${
+          data.dateRange.endDate.year
+        }`;
+
+        queryParams.set(
+          "dateRange",
+          `${formattedStartDate}_${formattedEndDate}`
+        );
+      }
+
+      const queryString = queryParams.toString();
+      if (queryString) {
+        router.push(`/trek?${queryString}`);
+      } else {
+        router.push("/trek");
+      }
+    }
+
+    // Prepare JSON for backend logging
     const searchPayload = {
       location: data.location,
       startDate: data.dateRange?.startDate
@@ -66,7 +102,6 @@ const SearchForm = ({ isDark }: { isDark: boolean }) => {
         name="SearchForm"
       >
         <div className={"flex md:flex-row flex-col w-full items-center gap-5"}>
-          {/* Location Input */}
           <Controller
             name="location"
             control={control}
@@ -92,7 +127,6 @@ const SearchForm = ({ isDark }: { isDark: boolean }) => {
             )}
           />
 
-          {/* Single Date Range Picker */}
           <Controller
             name="dateRange"
             control={control}
@@ -104,17 +138,15 @@ const SearchForm = ({ isDark }: { isDark: boolean }) => {
                 variant="flat"
                 showMonthAndYearPickers={true}
                 defaultValue={{
-                  start: startDate
-                    ? parseDate(startDate?.toString())
-                    : todayDate,
-                  end: endDate ? parseDate(endDate?.toString()) : tenDaysLater,
+                  start: startDate,
+                  end: endDate,
                 }}
                 onChange={(range) => {
                   field.onChange({
-                    startDate: range?.start || null,
-                    endDate: range?.end || null,
+                    startDate: range?.start,
+                    endDate: range?.end,
                   });
-                  setDates(range?.start || null, range?.end || null); // Sync Zustand state
+                  setDates(range.start, range.end); // Sync Zustand state
                 }}
               />
             )}

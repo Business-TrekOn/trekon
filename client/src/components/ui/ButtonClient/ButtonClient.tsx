@@ -7,6 +7,7 @@ interface ButtonClientProps {
   children: React.ReactNode;
   href?: string;
   size?: "sm" | "md" | "lg";
+  isDisabled?: boolean;
   variant?:
     | "flat"
     | "solid"
@@ -27,6 +28,7 @@ const ButtonClient = ({
   size = "md",
   variant = "solid",
   className,
+  isDisabled = false,
   type = "button",
   radius = "md",
   onClick,
@@ -45,6 +47,7 @@ const ButtonClient = ({
         href={href}
         size={size}
         radius={radius}
+        isDisabled={isDisabled}
         variant={variant}
         className={clsx("transition-all hover:scale-105", className)}
         onPress={handlePress}
@@ -64,6 +67,7 @@ const ButtonClient = ({
       radius={radius}
       className={clsx("transition-all hover:scale-105", className)}
       onPress={onClick}
+      isDisabled={isDisabled}
       {...props}
     >
       {children}
