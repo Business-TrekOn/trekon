@@ -165,7 +165,7 @@ const TrekDetails = () => {
 
                   <ButtonClient
                     size="lg"
-                    href="/book-now"
+                    href={`/trek/${id}/book-now`}
                     className="w-full bg-black text-white py-3 hover:bg-gray-800 hover:scale-105 transition-all mb-6"
                   >
                     Book Now

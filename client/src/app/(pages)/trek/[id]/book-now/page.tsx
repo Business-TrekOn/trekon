@@ -3,7 +3,7 @@ import React from "react";
 import { Construction, ArrowLeft } from "lucide-react";
 import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
 
-export default function LoginSherpa({
+export default function BookNowTrek({
   title = "Page Under Construction",
   subtitle = "We're working hard to bring you something amazing",
 }) {
