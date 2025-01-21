@@ -38,7 +38,7 @@ const TrekCard = ({ trek }: { trek: TrekType }) => {
             size="md"
             src={trek.sherpa.avatar}
             alt={trek.sherpa.name}
-            className="rounded-full border-2 border-white"
+            className="min-w-3 min-h-3 rounded-full border-2 border-white"
           />
           <div className="flex flex-col gap-0.5 sm:gap-1">
             <span className="text-white text-sm font-medium">

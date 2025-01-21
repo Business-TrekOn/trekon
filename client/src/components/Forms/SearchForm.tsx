@@ -53,38 +53,41 @@ const SearchForm = ({ isDark }: { isDark: boolean }) => {
     setLocation(data.location);
     setDates(data.dateRange?.startDate, data.dateRange?.endDate);
 
-    if (pathname !== "/trek") {
-      const queryParams = new URLSearchParams();
+    // Build the query parameters regardless of the page
+    const queryParams = new URLSearchParams();
 
-      if (data.location) {
-        queryParams.set("location", data.location);
-      }
+    if (data.location) {
+      queryParams.set("location", data.location);
+    }
 
-      if (data.dateRange?.startDate && data.dateRange?.endDate) {
-        const formattedStartDate = `${String(
-          data.dateRange.startDate.day
-        ).padStart(2, "0")}-${String(data.dateRange.startDate.month).padStart(
-          2,
-          "0"
-        )}-${data.dateRange.startDate.year}`;
+    if (data.dateRange?.startDate && data.dateRange?.endDate) {
+      const formattedStartDate = `${String(
+        data.dateRange.startDate.day
+      ).padStart(2, "0")}-${String(data.dateRange.startDate.month).padStart(
+        2,
+        "0"
+      )}-${data.dateRange.startDate.year}`;
 
-        const formattedEndDate = `${String(data.dateRange.endDate.day).padStart(
-          2,
-          "0"
-        )}-${String(data.dateRange.endDate.month).padStart(2, "0")}-${
-          data.dateRange.endDate.year
-        }`;
+      const formattedEndDate = `${String(data.dateRange.endDate.day).padStart(
+        2,
+        "0"
+      )}-${String(data.dateRange.endDate.month).padStart(2, "0")}-${
+        data.dateRange.endDate.year
+      }`;
 
-        queryParams.set(
-          "dateRange",
-          `${formattedStartDate}_${formattedEndDate}`
-        );
-      }
+      queryParams.set("dateRange", `${formattedStartDate}_${formattedEndDate}`);
+    }
 
-      const queryString = queryParams.toString();
+    // Handle navigation after setting query parameters
+    const queryString = queryParams.toString();
+
+    if (pathname === "/trek") {
+      router.push(queryString ? `/trek?${queryString}` : "/trek");
+    } else {
       router.push(queryString ? `/trek?${queryString}` : "/trek");
     }
 
+    // Log search payload
     const searchPayload = {
       location: data.location,
       startDate: data.dateRange?.startDate
@@ -140,7 +143,7 @@ const SearchForm = ({ isDark }: { isDark: boolean }) => {
                   </AutocompleteItem>
                 )}
                 {locations?.map((loc: { key: string; label: string }) => (
-                  <AutocompleteItem key={loc.label} id={loc.key}>
+                  <AutocompleteItem key={loc.key} id={loc.key}>
                     {loc.label}
                   </AutocompleteItem>
                 ))}
