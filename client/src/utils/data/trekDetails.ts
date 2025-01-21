@@ -36,4 +36,10 @@ export const trekDetails: TrekDetails = {
     experience: "12+ years experience",
     certifications: ["IFMGA Certified", "First Aid"],
   },
+  photo_gallery: [
+    "/card-image-placeholder.png",
+    "/photo-carousel-placeholder.jpeg",
+    "/card-image-placeholder.png",
+    "/photo-carousel-placeholder.jpeg",
+  ],
 };

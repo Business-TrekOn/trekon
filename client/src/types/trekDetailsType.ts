@@ -24,4 +24,5 @@ export interface TrekDetails {
   coverImage: string;
   trekDays: TrekDay[];
   sherpa: Sherpa;
+  photo_gallery: string[];
 }

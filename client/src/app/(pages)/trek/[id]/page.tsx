@@ -114,7 +114,7 @@ const TrekDetails = () => {
                 </div>
 
                 {/* Photo Gallery */}
-                <PhotoGallery />
+                <PhotoGallery photo_gallery={trekDetails.photo_gallery} />
               </div>
 
               {/* Right Column - Booking Info */}

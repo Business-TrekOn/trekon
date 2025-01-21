@@ -4,7 +4,7 @@ import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
 
 const Featured = () => {
   return (
-    <section className="py-16 px-4">
+    <section className="py-16 px-4 overflow-hidden">
       <div className="container mx-auto max-w-7xl flex flex-col gap-10">
         <div className="flex items-center justify-between mb-6 sm:mb-8">
           <h1 className="text-2xl sm:text-3xl font-semibold">Featured Treks</h1>
