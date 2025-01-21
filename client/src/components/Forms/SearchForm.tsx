@@ -9,9 +9,17 @@ import { useForm, Controller } from "react-hook-form";
 import { useTrekStore } from "@/store/store";
 import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
 import { MapPin } from "lucide-react";
-import { locations } from "@/utils/data/locations";
 import clsx from "clsx";
 import { usePathname, useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+
+const fetchLocations = async () => {
+  const response = await fetch("http://localhost:5500/api/locations");
+  if (!response.ok) {
+    throw new Error("Failed to fetch locations");
+  }
+  return response.json();
+};
 
 const SearchForm = ({ isDark }: { isDark: boolean }) => {
   const { setLocation, setDates, location, startDate, endDate } =
@@ -29,13 +37,22 @@ const SearchForm = ({ isDark }: { isDark: boolean }) => {
     },
   });
 
+  // Fetch locations with caching
+  const {
+    data: locations,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["locations"],
+    queryFn: fetchLocations,
+    staleTime: 1000 * 60 * 10, // Cache data for 10 minutes
+  });
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (data: any) => {
-    // Update Zustand state
     setLocation(data.location);
     setDates(data.dateRange?.startDate, data.dateRange?.endDate);
 
-    // Build query string for non-/trek routes
     if (pathname !== "/trek") {
       const queryParams = new URLSearchParams();
 
@@ -65,14 +82,9 @@ const SearchForm = ({ isDark }: { isDark: boolean }) => {
       }
 
       const queryString = queryParams.toString();
-      if (queryString) {
-        router.push(`/trek?${queryString}`);
-      } else {
-        router.push("/trek");
-      }
+      router.push(queryString ? `/trek?${queryString}` : "/trek");
     }
 
-    // Prepare JSON for backend logging
     const searchPayload = {
       location: data.location,
       startDate: data.dateRange?.startDate
@@ -117,8 +129,17 @@ const SearchForm = ({ isDark }: { isDark: boolean }) => {
                 onSelectionChange={(value) =>
                   field.onChange(value?.toString() || "")
                 }
+                isDisabled={isLoading || isError}
               >
-                {locations.map((loc) => (
+                {isLoading && (
+                  <AutocompleteItem key="loading">Loading...</AutocompleteItem>
+                )}
+                {isError && (
+                  <AutocompleteItem key="error">
+                    Error loading locations
+                  </AutocompleteItem>
+                )}
+                {locations?.map((loc: { key: string; label: string }) => (
                   <AutocompleteItem key={loc.label} id={loc.key}>
                     {loc.label}
                   </AutocompleteItem>
@@ -146,7 +167,7 @@ const SearchForm = ({ isDark }: { isDark: boolean }) => {
                     startDate: range?.start,
                     endDate: range?.end,
                   });
-                  setDates(range.start, range.end); // Sync Zustand state
+                  setDates(range.start, range.end);
                 }}
               />
             )}

@@ -1,11 +1,15 @@
 "use client";
 import Slider from "react-slick";
 import TrekCard from "../Card/TrekCard";
-import { featuredTreks } from "@/utils/data/featuredTreks";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { TrekType } from "@/types/treksType";
 
-const Carousel = () => {
+type CarouselProps = {
+  featuredTreks: TrekType[];
+};
+
+const Carousel = ({ featuredTreks }: CarouselProps) => {
   const settings = {
     dots: true,
     dotsClass: "slick-dots ",
@@ -35,7 +39,7 @@ const Carousel = () => {
   return (
     <section className="w-full">
       <Slider {...settings}>
-        {featuredTreks.map((trek) => (
+        {featuredTreks.map((trek: TrekType) => (
           <div key={trek.id} className="px-4">
             <TrekCard trek={trek} />
           </div>

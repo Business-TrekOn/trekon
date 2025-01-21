@@ -2,13 +2,18 @@
 "use client";
 
 import { NextUIProvider } from "@nextui-org/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+
+const queryClient = new QueryClient();
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   return (
-    <NextUIProvider locale="en-GB" navigate={router.push}>
-      {children}
-    </NextUIProvider>
+    <QueryClientProvider client={queryClient}>
+      <NextUIProvider locale="en-GB" navigate={router.push}>
+        {children}
+      </NextUIProvider>
+    </QueryClientProvider>
   );
 }

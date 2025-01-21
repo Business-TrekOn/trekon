@@ -2,27 +2,9 @@ import { Avatar, Chip } from "@nextui-org/react";
 import { CalendarDays, UsersRound } from "lucide-react";
 import Image from "next/image";
 import ButtonClient from "../ButtonClient/ButtonClient";
+import { TrekType } from "@/types/treksType";
 
-type TrekData = {
-  id: number;
-  title: string;
-  sherpa: {
-    name: string;
-    experience: string;
-    avatar: string;
-  };
-  difficulty: string;
-  duration: string;
-  groupSizeMin: string;
-  groupSizeMax: string;
-  startDate: string;
-  endDate: string;
-  price: number;
-  image: string;
-  isSponsored: boolean;
-};
-
-const TrekCard = ({ trek }: { trek: TrekData }) => {
+const TrekCard = ({ trek }: { trek: TrekType }) => {
   return (
     <section className="w-full max-w-[450px] mx-auto">
       <div className="bg-black rounded-xl overflow-hidden shadow-md h-full">
@@ -41,28 +23,29 @@ const TrekCard = ({ trek }: { trek: TrekData }) => {
               size="sm"
               className="absolute top-2 right-2"
               classNames={{
-                base: "bg-gradient-to-br from-yellow-300 to-yellow-400 border-small border-yellow-200/50 shadow-yellow-500/30",
-                content: "drop-shadow shadow-black text-black",
+                base: "border-2 border-yellow-200/50 shadow-yellow-500/30",
+                content: "drop-shadow shadow-black text-yellow-500",
               }}
-              variant="flat"
+              variant="bordered"
             >
               Sponsored
             </Chip>
           )}
         </div>
 
-        <div className="flex items-center gap-2 px-4 sm:px-6 pt-4 sm:pt-6">
+        <div className="flex items-center gap-3 px-4 sm:px-6 pt-4 sm:pt-6">
           <Avatar
+            size="md"
             src={trek.sherpa.avatar}
             alt={trek.sherpa.name}
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border-2 border-white"
+            className="rounded-full border-2 border-white"
           />
           <div className="flex flex-col gap-0.5 sm:gap-1">
             <span className="text-white text-sm font-medium">
               {trek.sherpa.name}
             </span>
             <span className="text-gray-500 text-xs font-normal">
-              {trek.sherpa.experience} years experience
+              {trek.sherpa.experience}
             </span>
           </div>
         </div>
@@ -75,7 +58,7 @@ const TrekCard = ({ trek }: { trek: TrekData }) => {
           <div className="flex flex-col gap-1.5 sm:gap-2 mb-4">
             <div className="flex items-center gap-2">
               <span className="text-xs sm:text-sm text-gray-500">
-                {trek.duration}
+                {trek.duration} days
               </span>
               <span className="text-xs sm:text-sm text-gray-500">
                 • {trek.difficulty}
@@ -97,7 +80,7 @@ const TrekCard = ({ trek }: { trek: TrekData }) => {
 
           <div className="flex justify-between items-center">
             <span className="font-bold text-lg sm:text-xl text-white">
-              ${trek.price.toLocaleString()}
+              ₹ {trek.price.toLocaleString()}
             </span>
             <ButtonClient
               size="md"
