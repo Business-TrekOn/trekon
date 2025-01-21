@@ -11,7 +11,7 @@ interface Sherpa {
   certifications: string[];
 }
 
-export interface TrekDetails {
+export interface TrekDetailsType {
   title: string;
   description: string;
   duration: string;

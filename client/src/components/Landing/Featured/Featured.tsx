@@ -5,7 +5,9 @@ import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchFeaturedTreks = async () => {
-  const response = await fetch("http://localhost:5500/api/featured-treks");
+  const response = await fetch(
+    "http://localhost:5500/api/treks/featured-treks"
+  );
   if (!response.ok) {
     throw new Error("Failed to fetch featured treks");
   }

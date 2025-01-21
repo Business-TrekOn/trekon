@@ -1,30 +1,56 @@
 "use client";
+import { useParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 import Footer from "@/components/Shared/Footer/Footer";
 import Header from "@/components/Shared/Header/Header";
 import Image from "next/image";
 import { Calendar, Users, Mountain, MapPin } from "lucide-react";
 import { Avatar, Chip } from "@nextui-org/react";
-import { trekDetails } from "@/utils/data/trekDetails";
-import { motion } from "framer-motion";
 import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
 import PhotoGallery from "@/components/ui/PhotoGallery/PhotoGallery";
 import ProgressBarClient from "@/components/ui/ProgressBarClient/ProgressBarClient";
+import { motion } from "framer-motion";
+import { TrekDetailsType } from "@/types/trekDetailsType";
+import ErrorPage from "@/components/Error/Error";
+import Loading from "@/components/Loading/Loading";
+
+// Fetch function for the trek details
+const fetchTrekDetails = async (id: string): Promise<TrekDetailsType> => {
+  const response = await fetch(`http://localhost:5500/api/trek-details/${id}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch trek details");
+  }
+  return response.json();
+};
 
 const TrekDetails = () => {
-  const {
-    title,
-    description,
-    duration,
-    groupSize,
-    difficulty,
-    startingPoint,
-    price,
-    availableSlots,
-    bookingDeadline,
-    coverImage,
-    trekDays,
-    sherpa,
-  } = trekDetails;
+  const { id } = useParams();
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["trekDetails", id],
+    queryFn: () => fetchTrekDetails(id as string),
+    staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
+  });
+
+  const total = (): number => {
+    return parseInt(data?.groupSize?.split("-")[1] || "0", 10);
+  };
+
+  const availableSlots = parseInt(data?.availableSlots || "0", 10);
+
+  const percentage = Math.floor(((total() - availableSlots) * 100) / total());
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <ErrorPage />;
+  }
+
+  if (!data) {
+    return <ErrorPage />;
+  }
 
   return (
     <section className="min-h-screen flex flex-col">
@@ -38,30 +64,32 @@ const TrekDetails = () => {
           transition={{ duration: 0.6 }}
         >
           <Image
-            src={coverImage}
-            alt={title}
+            src={data?.coverImage}
+            alt={data?.title}
             className="object-cover brightness-50"
             fill
             loading="lazy"
           />
           <div className="absolute inset-0 bg-black/30" />
-          <div className="absolute inset-0 flex flex-col justify-center items-center px-4 md:px-8 lg:px-16 max-w-7xl mx-auto">
+          <div className="absolute inset-0 flex flex-col justify-center items-center px-4 md:px-8 lg:px-16 max-w-7xl mx-auto text-center">
             <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4">
-              {title}
+              {data?.title}
             </h1>
-            <p className="md:text-xl text-lg text-white">{description}</p>
+            <p className="md:text-md text-lg text-white md:w-[70%]">
+              {data?.description}
+            </p>
           </div>
         </motion.section>
 
         {/* Trek Info Section */}
         <section className="py-8 px-4 md:px-8 lg:px-20">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-[85rem] mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full mb-12 mx-auto">
               <div className="flex items-center gap-3 py-2">
                 <Calendar className="w-6 h-6" />
                 <div>
                   <p className="text-sm text-gray-600">Duration</p>
-                  <p className="font-semibold">{duration}</p>
+                  <p className="font-semibold">{data?.duration} days</p>
                 </div>
               </div>
 
@@ -69,7 +97,7 @@ const TrekDetails = () => {
                 <Users className="w-6 h-6" />
                 <div>
                   <p className="text-sm text-gray-600">Group Size</p>
-                  <p className="font-semibold">{groupSize}</p>
+                  <p className="font-semibold">{data?.groupSize} peoples</p>
                 </div>
               </div>
 
@@ -77,7 +105,7 @@ const TrekDetails = () => {
                 <Mountain className="w-6 h-6" />
                 <div>
                   <p className="text-sm text-gray-600">Difficulty</p>
-                  <p className="font-semibold">{difficulty}</p>
+                  <p className="font-semibold">{data?.difficulty}</p>
                 </div>
               </div>
 
@@ -85,55 +113,52 @@ const TrekDetails = () => {
                 <MapPin className="w-6 h-6" />
                 <div>
                   <p className="text-sm text-gray-600">Starting Point</p>
-                  <p className="font-semibold">{startingPoint}</p>
+                  <p className="font-semibold">{data?.startingPoint}</p>
                 </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 justify-between">
               {/* Left Column - Trek Overview */}
               <div className="lg:col-span-2">
                 <h2 className="text-2xl font-bold mb-6">Trek Overview</h2>
                 <div className="space-y-6">
-                  {trekDays.map((day, index) => (
+                  {data?.trekDays?.map((day, index) => (
                     <div key={index} className="flex gap-4 items-start">
                       <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <Image
-                          src={day.icon}
-                          alt={day.title}
-                          width={48}
-                          height={48}
-                        />
+                        🌄
                       </div>
                       <div>
                         <h3 className="font-semibold mb-1">{day.title}</h3>
-                        <p className="text-gray-600">{day.description}</p>
+                        <p className="text-gray-600 text-sm md:w-[70%] w-[90%]">
+                          {day.description}
+                        </p>
                       </div>
                     </div>
                   ))}
                 </div>
 
-                {/* Photo Gallery */}
-                <PhotoGallery photo_gallery={trekDetails.photo_gallery} />
+                {/* Static Photo Gallery */}
+                <PhotoGallery photo_gallery={[]} />
               </div>
 
               {/* Right Column - Booking Info */}
               <div className="lg:col-span-1">
                 <div className="bg-white p-6 rounded-lg shadow-lg">
                   <div className="mb-6">
-                    <span className="text-3xl font-bold">{price}</span>
+                    <span className="text-3xl font-bold">₹ {data?.price}</span>
                     <span className="text-gray-600 ml-2">per person</span>
                   </div>
 
                   <div className="mb-6">
                     <p className="font-semibold mb-2">Available Slots</p>
-                    <ProgressBarClient value={75} />
+                    <ProgressBarClient value={percentage} />
                     <div className="flex justify-between mt-2">
                       <span className="text-sm text-gray-600">
-                        {availableSlots}
+                        {data?.availableSlots}/{total()} slots left
                       </span>
                       <span className="text-sm text-gray-600">
-                        Book before {bookingDeadline}
+                        Book before {data?.bookingDeadline}
                       </span>
                     </div>
                   </div>
@@ -150,16 +175,22 @@ const TrekDetails = () => {
                     <h3 className="font-bold mb-4">Your Guide</h3>
                     <div className="flex items-center gap-4">
                       <Avatar
-                        className="w-20 h-20 text-large"
-                        src={sherpa.avatar}
+                        size="lg"
+                        className="min-w-20 min-h-20 text-large"
+                        src={
+                          data?.sherpa?.avatar ===
+                          "https://example.com/sherpa-avatar.jpg"
+                            ? "/avatar-placeholder.png"
+                            : data?.sherpa?.avatar
+                        }
                       />
                       <div>
-                        <p className="font-semibold">{sherpa.name}</p>
+                        <p className="font-semibold">{data?.sherpa?.name}</p>
                         <p className="text-sm text-gray-600">
-                          {sherpa.experience}
+                          {data?.sherpa?.experience}
                         </p>
-                        <div className="flex gap-2 mt-2">
-                          {sherpa.certifications.map((cert, index) => (
+                        <div className="flex flex-col md:flex-row gap-2 mt-2">
+                          {data?.sherpa?.certifications?.map((cert, index) => (
                             <Chip key={index} size="sm" radius="md">
                               {cert}
                             </Chip>
@@ -169,7 +200,7 @@ const TrekDetails = () => {
                     </div>
                     <ButtonClient
                       size="lg"
-                      href="/profile/sherpa/1"
+                      href={`/profile/sherpa/${id}`}
                       className="w-full mt-4 bg-transparent border border-black text-black hover:bg-gray-50 hover:scale-105 transition-all"
                     >
                       View Profile
