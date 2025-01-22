@@ -38,23 +38,23 @@ const BarLoader = () => {
     >
       <motion.div
         variants={variants}
-        className="h-12 w-2 rounded-lg bg-black"
+        className="h-36 w-6 rounded-lg bg-black"
       />
       <motion.div
         variants={variants}
-        className="h-12 w-2 rounded-lg bg-black"
+        className="h-36 w-6 rounded-lg bg-black"
       />
       <motion.div
         variants={variants}
-        className="h-12 w-2 rounded-lg bg-black"
+        className="h-36 w-6 rounded-lg bg-black"
       />
       <motion.div
         variants={variants}
-        className="h-12 w-2 rounded-lg bg-black"
+        className="h-36 w-6 rounded-lg bg-black"
       />
       <motion.div
         variants={variants}
-        className="h-12 w-2 rounded-lg bg-black"
+        className="h-36 w-6 rounded-lg bg-black"
       />
     </motion.div>
   );

@@ -291,11 +291,11 @@ const RegisterClient = () => {
       <section className="hidden md:block md:w-1/2 bg-black rounded-xl overflow-hidden">
         <div className="h-full w-full relative overflow-hidden">
           <Image
-            src="/auth-image.png"
+            src="/auth-image.jpg"
             alt="Decorative floral still life painting"
             className="object-cover"
             fill
-            loading="lazy"
+            priority
           />
         </div>
       </section>

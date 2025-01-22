@@ -8,29 +8,7 @@ import SearchForm from "@/components/Forms/SearchForm";
 import { TrekType } from "@/types/treksType";
 import Loading from "@/components/Loading/Loading";
 import ErrorPage from "@/components/Error/Error";
-
-const fetchTreks = async (searchParams: URLSearchParams | null) => {
-  // If no search params, return early
-  if (
-    !searchParams ||
-    (!searchParams.get("location") && !searchParams.get("dateRange"))
-  ) {
-    const response = await fetch("http://localhost:5500/api/treks");
-    if (!response.ok) throw new Error("Failed to fetch treks");
-    return response.json();
-  }
-
-  // Construct the search URL with parameters
-  const searchQuery = searchParams.toString();
-  const response = await fetch(
-    `http://localhost:5500/api/search-treks?${searchQuery}`
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch filtered treks");
-  }
-  return response.json();
-};
+import { fetchTreks } from "@/api/fetchTreks";
 
 const Trek = () => {
   const searchParams = useSearchParams();

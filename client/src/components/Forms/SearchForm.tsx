@@ -12,14 +12,7 @@ import { MapPin } from "lucide-react";
 import clsx from "clsx";
 import { usePathname, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-
-const fetchLocations = async () => {
-  const response = await fetch("http://localhost:5500/api/locations");
-  if (!response.ok) {
-    throw new Error("Failed to fetch locations");
-  }
-  return response.json();
-};
+import { fetchLocations } from "@/api/fetchLocations";
 
 const SearchForm = ({ isDark }: { isDark: boolean }) => {
   const { setLocation, setDates, location, startDate, endDate } =

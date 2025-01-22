@@ -3,16 +3,7 @@ import { ChevronRight } from "lucide-react";
 import Carousel from "../../ui/Carousel/Carousel";
 import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
 import { useQuery } from "@tanstack/react-query";
-
-const fetchFeaturedTreks = async () => {
-  const response = await fetch(
-    "http://localhost:5500/api/treks/featured-treks"
-  );
-  if (!response.ok) {
-    throw new Error("Failed to fetch featured treks");
-  }
-  return response.json();
-};
+import { fetchFeaturedTreks } from "@/api/fetchFeaturedTreks";
 
 const Featured = () => {
   const {
@@ -22,7 +13,7 @@ const Featured = () => {
   } = useQuery({
     queryKey: ["featuredTreks"],
     queryFn: fetchFeaturedTreks,
-    staleTime: 5 * 60 * 1000, // cache for 5 minutes
+    staleTime: 10 * 60 * 1000, // cache for 10 minutes
   });
 
   if (isLoading) return <p>Loading featured treks...</p>;
