@@ -14,7 +14,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { fetchLocations } from "@/api/fetchLocations";
 
-const SearchForm = ({ isDark }: { isDark: boolean }) => {
+const SearchForm = ({ isDark }) => {
   const { setLocation, setDates, location, startDate, endDate } =
     useTrekStore();
   const pathname = usePathname();
@@ -40,9 +40,7 @@ const SearchForm = ({ isDark }: { isDark: boolean }) => {
     queryFn: fetchLocations,
     staleTime: 1000 * 60 * 10, // Cache data for 10 minutes
   });
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onSubmit = (data: any) => {
+  const onSubmit = (data) => {
     setLocation(data.location);
     setDates(data.dateRange?.startDate, data.dateRange?.endDate);
 
@@ -135,7 +133,7 @@ const SearchForm = ({ isDark }: { isDark: boolean }) => {
                     Error loading locations
                   </AutocompleteItem>
                 )}
-                {locations?.map((loc: { key: string; label: string }) => (
+                {locations?.map((loc) => (
                   <AutocompleteItem key={loc.key} id={loc.key}>
                     {loc.label}
                   </AutocompleteItem>
