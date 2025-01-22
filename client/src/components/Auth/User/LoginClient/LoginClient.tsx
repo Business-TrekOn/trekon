@@ -168,4 +168,4 @@ const LoginClient = () => {
   );
 };
 
-export default React.memo(LoginClient);
+export default LoginClient;

@@ -2,11 +2,12 @@
 import React from "react";
 import { Construction, ArrowLeft } from "lucide-react";
 import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
+import { SherpaAuthType } from "@/types/SherpaAuth";
 
 export default function RegisterSherpa({
   title = "Page Under Construction",
   subtitle = "We're working hard to bring you something amazing",
-}) {
+}: SherpaAuthType) {
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4">
       {/* Construction Icon with Animation */}
