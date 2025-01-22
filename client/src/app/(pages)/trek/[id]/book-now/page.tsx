@@ -1,12 +1,8 @@
 "use client";
-import React from "react";
 import { Construction, ArrowLeft } from "lucide-react";
 import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
 
-export default function BookNowTrek({
-  title = "Page Under Construction",
-  subtitle = "We're working hard to bring you something amazing",
-}) {
+const BookNowTrek = () => {
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4">
       {/* Construction Icon with Animation */}
@@ -17,9 +13,11 @@ export default function BookNowTrek({
 
       {/* Main Content */}
       <h1 className="text-4xl font-bold text-black mb-4 text-center">
-        {title}
+        Page Under Construction
       </h1>
-      <p className="text-gray-600 mb-8 text-center max-w-md">{subtitle}</p>
+      <p className="text-gray-600 mb-8 text-center max-w-md">
+        We&apos;re working hard to bring you something amazing
+      </p>
 
       {/* Navigation */}
       <div className="flex gap-4">
@@ -43,4 +41,6 @@ export default function BookNowTrek({
       </div>
     </div>
   );
-}
+};
+
+export default BookNowTrek;
