@@ -2,7 +2,7 @@
 import React from "react";
 import { Construction, ArrowLeft } from "lucide-react";
 import ButtonClient from "@/components/ui/ButtonClient/ButtonClient";
-import { SherpaAuthType } from "@/types/SherpaAuth";
+import { SherpaAuthType } from "@/types/SherpaAuthType";
 
 export default function RegisterSherpa({
   title = "Page Under Construction",
