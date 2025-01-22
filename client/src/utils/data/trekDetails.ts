@@ -1,8 +1,8 @@
 // trekDetails.ts
 
-import { TrekDetails } from "@/types/trekDetailsType";
+import { TrekDetailsType } from "@/types/trekDetailsType";
 
-export const trekDetails: TrekDetails = {
+export const trekDetails: TrekDetailsType = {
   title: "Everest Base Camp Trek",
   description: "14 Days of Adventure at the Top of the World",
   duration: "14 Days",
