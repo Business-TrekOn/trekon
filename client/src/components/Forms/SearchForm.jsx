@@ -13,6 +13,7 @@ import clsx from "clsx";
 import { usePathname, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { fetchLocations } from "@/api/fetchLocations";
+import { Suspense } from "react";
 
 const SearchForm = ({ isDark }) => {
   const { setLocation, setDates, location, startDate, endDate } =
@@ -93,91 +94,97 @@ const SearchForm = ({ isDark }) => {
         : null,
     };
 
-    console.log("Search Payload:", JSON.stringify(searchPayload, null, 2));
+    // console.log("Search Payload:", JSON.stringify(searchPayload, null, 2));
   };
 
   return (
-    <div className={"flex items-center justify-center text-center px-4"}>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={clsx(
-          isDark
-            ? "flex flex-col gap-5 items-center"
-            : "flex md:flex-row flex-col gap-5 items-center"
-        )}
-        name="SearchForm"
-      >
-        <div className={"flex md:flex-row flex-col w-full items-center gap-5"}>
-          <Controller
-            name="location"
-            control={control}
-            render={({ field }) => (
-              <Autocomplete
-                {...field}
-                className="max-w-xs text-black border-gray-500"
-                placeholder="Location"
-                color="default"
-                defaultSelectedKey={location}
-                startContent={<MapPin className="text-gray-500" />}
-                variant="flat"
-                onSelectionChange={(value) =>
-                  field.onChange(value?.toString() || "")
-                }
-                isDisabled={isLoading || isError}
-              >
-                {isLoading && (
-                  <AutocompleteItem key="loading">Loading...</AutocompleteItem>
-                )}
-                {isError && (
-                  <AutocompleteItem key="error">
-                    Error loading locations
-                  </AutocompleteItem>
-                )}
-                {locations?.map((loc) => (
-                  <AutocompleteItem key={loc.key} id={loc.key}>
-                    {loc.label}
-                  </AutocompleteItem>
-                ))}
-              </Autocomplete>
-            )}
-          />
-
-          <Controller
-            name="dateRange"
-            control={control}
-            render={({ field }) => (
-              <DateRangePicker
-                aria-label="Date Range"
-                selectorButtonPlacement="start"
-                className="max-w-xs"
-                variant="flat"
-                showMonthAndYearPickers={true}
-                defaultValue={{
-                  start: startDate,
-                  end: endDate,
-                }}
-                onChange={(range) => {
-                  field.onChange({
-                    startDate: range?.start,
-                    endDate: range?.end,
-                  });
-                  setDates(range.start, range.end);
-                }}
-              />
-            )}
-          />
-        </div>
-        <ButtonClient
-          type="submit"
+    <Suspense>
+      <div className={"flex items-center justify-center text-center px-4"}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
           className={clsx(
-            "md:w-[25%] w-full",
-            isDark ? "text-black bg-white" : "bg-black text-white"
+            isDark
+              ? "flex flex-col gap-5 items-center"
+              : "flex md:flex-row flex-col gap-5 items-center"
           )}
+          name="SearchForm"
         >
-          Search for Trek
-        </ButtonClient>
-      </form>
-    </div>
+          <div
+            className={"flex md:flex-row flex-col w-full items-center gap-5"}
+          >
+            <Controller
+              name="location"
+              control={control}
+              render={({ field }) => (
+                <Autocomplete
+                  {...field}
+                  className="max-w-xs text-black border-gray-500"
+                  placeholder="Location"
+                  color="default"
+                  defaultSelectedKey={location}
+                  startContent={<MapPin className="text-gray-500" />}
+                  variant="flat"
+                  onSelectionChange={(value) =>
+                    field.onChange(value?.toString() || "")
+                  }
+                  isDisabled={isLoading || isError}
+                >
+                  {isLoading && (
+                    <AutocompleteItem key="loading">
+                      Loading...
+                    </AutocompleteItem>
+                  )}
+                  {isError && (
+                    <AutocompleteItem key="error">
+                      Error loading locations
+                    </AutocompleteItem>
+                  )}
+                  {locations?.map((loc) => (
+                    <AutocompleteItem key={loc.key} id={loc.key}>
+                      {loc.label}
+                    </AutocompleteItem>
+                  ))}
+                </Autocomplete>
+              )}
+            />
+
+            <Controller
+              name="dateRange"
+              control={control}
+              render={({ field }) => (
+                <DateRangePicker
+                  aria-label="Date Range"
+                  selectorButtonPlacement="start"
+                  className="max-w-xs"
+                  variant="flat"
+                  showMonthAndYearPickers={true}
+                  defaultValue={{
+                    start: startDate,
+                    end: endDate,
+                  }}
+                  onChange={(range) => {
+                    field.onChange({
+                      startDate: range?.start,
+                      endDate: range?.end,
+                    });
+                    setDates(range.start, range.end);
+                  }}
+                />
+              )}
+            />
+          </div>
+          <ButtonClient
+            type="submit"
+            className={clsx(
+              "md:w-[25%] w-full",
+              isDark ? "text-black bg-white" : "bg-black text-white"
+            )}
+          >
+            Search for Trek
+          </ButtonClient>
+        </form>
+      </div>
+    </Suspense>
   );
 };
 
