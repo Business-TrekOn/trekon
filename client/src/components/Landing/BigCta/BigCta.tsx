@@ -28,7 +28,7 @@ const BigCta = () => {
           <ButtonClient
             size="lg"
             variant="bordered"
-            href="/auth/sherpa/register"
+            href="/"
             className="bg-transparent text-white"
           >
             Become a Sherpa Partner

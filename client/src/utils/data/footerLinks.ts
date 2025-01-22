@@ -3,7 +3,7 @@ export const footerLinks = {
     { name: "About Us", link: "/about" },
     { name: "Explore Treks", link: "/treks" },
     { name: "Terms & Conditions", link: "/terms" },
-    { name: "Join as Sherpa", link: "/profile/sherpa" },
+    { name: "Join as Sherpa", link: "/" },
   ],
   support: [
     { name: "Safety", link: "/safety" },
