@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TrekOn
 
-## Getting Started
+Welcome to the TrekOn, a beautifully designed platform for adventure enthusiasts to easily book trekking packages created by expert Sherpas. The website offers a clean, responsive black and white theme that ensures a seamless experience across all devices.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Responsive UI:** Built with Next.js and Tailwind CSS, the frontend adapts to all screen sizes for a smooth user experience.
+
+- **Clean Design:** A minimalistic black and white theme that provides a modern and distraction-free interface.
+
+- **Simple Booking Process:** Users can quickly find trekking packages by searching their preferred location and available date range.
+
+- **State Management:** Implemented using Zustand for efficient and scalable state handling.
+
+- **Data Fetching:** Optimized with TanStack Query to fetch data from the server and cache it.
+
+- **UI Components:** Leveraging Hero UI for pre-styled components to enhance the visual appeal and consistency.
+
+## How It Works
+
+- **Search for Treks:** Enter your desired location and available date range.
+
+- **Select a Package:** Choose from various trekking packages offered by expert Sherpas.
+
+- **Book Your Trek:** Click on "Book Now" and get ready for your trekking adventure.
+
+## Tech Stack(Frontend)
+
+- **Framework:** Next.js
+
+- **Styling:** Tailwind CSS
+
+- **Component Library:** Hero UI
+
+- **State Management:** Zustand
+
+- **Data Fetching:** TanStack Query
+
+## Installation
+
+To run the project locally, follow these steps:
+
+# Clone the repository
+
+```
+ git clone https://github.com/Business-TrekOn/trekon-client.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Navigate to the project directory
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+ cd trekon-client
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Install dependencies
 
-## Learn More
+```
+ npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+# Start the development server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+ npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- The website will be available at `http://localhost:3000`.
 
-## Deploy on Vercel
+## Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions are welcome! Feel free to open issues and pull requests to improve the project.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+This project is licensed under the [MIT License](./LICENSE).
