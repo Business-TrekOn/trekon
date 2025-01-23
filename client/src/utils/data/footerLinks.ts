@@ -1,7 +1,7 @@
 export const footerLinks = {
   quick_links: [
     { name: "About Us", link: "/about" },
-    { name: "Explore Treks", link: "/treks" },
+    { name: "Explore Treks", link: "/trek" },
     { name: "Terms & Conditions", link: "/terms" },
     { name: "Join as Sherpa", link: "/" },
   ],

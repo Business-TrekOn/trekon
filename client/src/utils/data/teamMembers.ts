@@ -32,7 +32,7 @@ export const teamMembers: TeamMember[] = [
   },
   {
     name: "Subhendu Dutta Banik",
-    role: "PPT Designer",
+    role: "Idea Contributor",
     image: "/subhendu.jpg",
   },
 ];
