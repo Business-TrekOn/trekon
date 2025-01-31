@@ -134,7 +134,7 @@ const ContactPage = () => {
                     <div>
                       <p className="text-sm text-gray-500">Email</p>
                       <p className="text-black font-medium">
-                        support@yourcompany.com
+                        business.trekon@gmail.com
                       </p>
                     </div>
                   </li>
@@ -144,7 +144,7 @@ const ContactPage = () => {
                     </div>
                     <div>
                       <p className="text-sm text-gray-500">Phone</p>
-                      <p className="text-black font-medium">+1 234 567 890</p>
+                      <p className="text-black font-medium">+91 8584879500</p>
                     </div>
                   </li>
                   <li className="flex items-center space-x-4">
