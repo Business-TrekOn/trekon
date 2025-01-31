@@ -143,7 +143,7 @@ const ContactPage = () => {
                       <Phone className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500">Phone</p>
+                      <p className="text-sm text-gray-500">Phone Number</p>
                       <p className="text-black font-medium">+91 8584879500</p>
                     </div>
                   </li>
